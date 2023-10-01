@@ -2,10 +2,13 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Prediction
+from rest_framework.authtoken.models import Token
 from .serializers import PredictionSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # Create your views here.
 
+#API for predictions
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
@@ -79,3 +82,5 @@ def deleteSymptom(request,id):
     symptom=Prediction.objects.get(pk=id)
     symptom.delete()
     return Response("Symptom deleted")
+
+
