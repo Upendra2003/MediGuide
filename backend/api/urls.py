@@ -1,7 +1,10 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns=[
+
+  
     path('',views.getRoutes,name='get-routes'),
     path('symptoms/',views.getSymptoms,name='get-symptoms'),
     path('symptoms/create/',views.createSymptom,name='create-symptom'),
