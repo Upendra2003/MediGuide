@@ -1,20 +1,23 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from .models import Profile
 from rest_framework.authtoken.models import Token
 from .serializers import UserSerializer,UserRegistrationSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
-#API for User
+#API for User@permission_classes([IsAuthenticated])
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getUsers(request):
     users = Profile.objects.all()
     serializer = UserSerializer(users,many = True)
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getUser(request,id):
     user = Profile.objects.get(pk = id)
     serializer = UserSerializer(user,many = False)
@@ -31,6 +34,7 @@ def getUser(request,id):
 #     return Response(serializer.data)
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def deleteuser(request,id):
     user=Profile.objects.get(pk=id)
     user.delete()
@@ -39,6 +43,7 @@ def deleteuser(request,id):
 #User registration
 
 @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
 def register_userProfile(request):
     if request.method == 'POST':
         serializer = UserRegistrationSerializer(data= request.data)
