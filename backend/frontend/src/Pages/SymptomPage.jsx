@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useParams,useNavigate } from 'react-router-dom';
 
-export default function SymptomPage({match}) {
+export default function SymptomPage() {
 
     let navigate=useNavigate()
 

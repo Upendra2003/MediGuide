@@ -7,6 +7,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import RegisterPage from './Pages/RegisterPage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,6 +17,9 @@ function App() {
       <BrowserRouter>
         <div>
           <Routes>
+            <Route path='/register' element={<RegisterPage/> } />
+
+
             <Route path='/symptoms' exact element={<SymptomsPage/> } />
             <Route path='/symptoms/:symptomId/' exact element={<SymptomPage/>} />
           </Routes>
