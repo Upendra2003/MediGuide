@@ -1,11 +1,10 @@
 from rest_framework.serializers import ModelSerializer
 from .models import Profile
 from rest_framework import serializers
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.contrib.auth.models import User
 
 class UserSerializer(ModelSerializer):
-    permission_class = (IsAuthenticated)
     class Meta:
         model = Profile
         fields = '__all__'
@@ -38,4 +37,4 @@ class UserRegistrationSerializer(ModelSerializer):
 #     class Meta:
 #         model = User
 #         fields = ['username', 'password']
-    
+#     def login(request):
