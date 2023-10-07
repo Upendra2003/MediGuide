@@ -34,7 +34,7 @@ const Navbar = () => {
             className="text-black font-semibold text-xl mr-4 p-2" >
           Profile
         </NavLink>
-        <button className='p-14 px-9 m-113 py-2.5 text-base transition-all duration-200 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '> logout</button> 
+        <NavLink to={'/Register'} className='p-14 px-9 m-113 py-2.5 text-base transition-all duration-200 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '> Register </NavLink> 
       </div>
     </nav>
   )
