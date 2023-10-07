@@ -1,5 +1,6 @@
 Required modules:
 
-rest_framework
-rest_framework_simplejwt
-rest_framework.authtoken
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+pillow

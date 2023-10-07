@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Hiw from './pages/Hiw'
 import Predict from './pages/Predict'
 import Profile from './pages/Profile'
+import RegisterPage from './pages/RegisterPage'
 import STM from './pages/STM'
 import Error from './pages/error'
 import './App.css'
@@ -19,6 +20,7 @@ export default function App() {
       <Route path='/Predict' element={<Predict/>}/>
       <Route path='/STM' element={<STM/>}/>
       <Route path='/Profile' element={<Profile/>}/>
+      <Route path='/register' element={<RegisterPage/>}/>
       <Route path='*' element={<Error/>}/>
 
       </Route>
