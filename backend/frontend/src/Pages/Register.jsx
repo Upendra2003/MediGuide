@@ -1,6 +1,37 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 const login = () => {
+       const [userDetails,setUserDetails] = useState({
+        username:"",
+        email:"",
+        password:"",
+        password2:"",
+    })
+
+    const registerUser= async (e)=>{
+        e.preventDefault();
+        let response = await fetch('http://127.0.0.1:8000/profile/register/',{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(userDetails)
+        })
+        if (response.status==200){
+            console.log({"msg":"success"});
+            console.log(response)
+        }else{
+            alert("Error Please try again !!")
+        }
+    }
+    
+    const handleChange=(e)=>{
+        setUserDetails({
+            ...userDetails,
+            [e.target.name]:e.target.value
+        })
+        
+    }
   return (
     <section class="">
     <div class="grid  grid-cols-1 ">
@@ -15,10 +46,8 @@ const login = () => {
                             <label for="" class="text-base font-medium text-gray-900"> Full Name </label>
                             <div class="mt-2.5">
                                 <input
-                                    type="text"
-                                    name=""
-                                    id=""
-                                    placeholder="Enter your full name"
+                                type='text'
+                                    onChange={handleChange} placeholder='name' name='username'
                                     class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
                                 />
                             </div>
@@ -29,9 +58,7 @@ const login = () => {
                             <div class="mt-2.5">
                                 <input
                                     type="email"
-                                    name=""
-                                    id=""
-                                    placeholder="Enter email to get started"
+                                    onChange={handleChange} placeholder='email' name='email'
                                     class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
                                 />
                             </div>
@@ -41,10 +68,7 @@ const login = () => {
                             <label for="" class="text-base font-medium text-gray-900"> Password </label>
                             <div class="mt-2.5">
                                 <input
-                                    type="password"
-                                    name=""
-                                    id=""
-                                    placeholder="Enter your password"
+                                    type="password" onChange={handleChange} placeholder='password' name='password'
                                     class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
                                 />
                             </div>
@@ -54,10 +78,7 @@ const login = () => {
                             <label for="" class="text-base font-medium text-gray-900"> Re-enter Password </label>
                             <div class="mt-2.5">
                                 <input
-                                    type="password"
-                                    name=""
-                                    id=""
-                                    placeholder="Enter your password"
+                                   type="password" onChange={handleChange} placeholder='Re-enter password' name='password2'
                                     class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
                                 />
                             </div>
@@ -71,7 +92,7 @@ const login = () => {
                             </label>
                         </div>
                         <div>
-                            <button type="submit" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
+                            <button type="submit" onClick={registerUser} name="submit" value="Submit" class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700">
                                 Create free account
                             </button>
                         </div>
