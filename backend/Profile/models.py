@@ -1,6 +1,6 @@
 from django.db import models
 import uuid
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,post_delete
 from django.contrib.auth.models import User
 # from .serializers import UserRegistrationSerializer
 
@@ -27,3 +27,16 @@ def createProfile(sender, instance, created, **kwargs):
         )
 
 post_save.connect(createProfile, sender = User)
+
+def deleteProfile(sender , instance, **kwargs):
+    try:
+        user = instance
+        profile = Profile.objects.get(
+            username = user.username,
+            email = user.email,
+            )
+        profile.delete()
+    except Profile.DoesNotExist:
+        pass
+
+post_delete.connect(deleteProfile,sender = User)
