@@ -18,5 +18,5 @@ urlpatterns=[
 
 
     path('register/',views.register_userProfile,name='register'),
-    
+    path('user/<str:id>/update/',views.updateUser,name='update'),    
 ]
