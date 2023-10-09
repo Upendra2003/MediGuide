@@ -1,29 +1,33 @@
-import { useState } from 'react'
+import { Routes,Route } from 'react-router-dom'
+import Layout from './pages/Sharedlayout'
+import Home from './pages/Home'
+import Hiw from './pages/Hiw'
+import Predict from './pages/Predict'
+import Profile from './pages/Profile'
+import STM from './pages/STM'
+import Register from './pages/Register'
+import Login from './pages/login'
+import Error from './pages/error'
 import './App.css'
-import SymptomsPage from './Pages/SymptomsPage'
-import SymptomPage from './Pages/SymptomPage'
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <div>
-          <Routes>
-            <Route path='/symptoms' exact element={<SymptomsPage/> } />
-            <Route path='/symptoms/:symptomId/' exact element={<SymptomPage/>} />
-          </Routes>
-        </div>
-      </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+      <Route index element={<Home/>} />
+      <Route path='/Hiw' element={<Hiw/>} />
+      <Route path='/Predict' element={<Predict/>}/>
+      <Route path='/STM' element={<STM/>}/>
+      <Route path='/Profile' element={<Profile/>}/>
+      <Route path='/Register' element={<Register/>}/>
+      <Route path='/Login' element={<Login/>}/>
+      <Route path='*' element={<Error/>}/>
+
+      </Route>
+
+    </Routes>
     </>
-    
   )
 }
-
-export default App
