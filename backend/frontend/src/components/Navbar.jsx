@@ -1,6 +1,12 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { NavLink,Link } from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
+
+
 const Navbar = () => {
+
+  let {user,logoutUser} = useContext(AuthContext)
+
   return (
     <nav className='flex items-center justify-between h-16 lg:h-20' >
       <div className='flex shrink-0'>
@@ -34,7 +40,17 @@ const Navbar = () => {
             className="text-black font-semibold text-xl mr-4 p-2" >
           Profile
         </NavLink>
-        <NavLink to={'/Register'} className='p-14 px-9 m-113 py-2.5 text-base transition-all duration-200 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '> Register </NavLink> 
+        {
+          user? (
+            <a onClick={logoutUser} className='p-14 px-9 m-113 py-2.5 text-base transition-all duration-200 cursor-pointer hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '>Logout</a>
+          ):(
+            <>
+              <a href='/register' className='p-14 px-9 m-113 py-2.5 text-base transition-all duration-200 cursor-pointer hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '>Register</a> 
+              <a href='/login' className='p-14 px-9 m-113 py-2.5 text-base transition-all duration-200 cursor-pointer hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '>Login</a>
+            </>
+            )
+        }
+         
       </div>
     </nav>
   )
