@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
 return (
-    <section class="py-6 bg-slate-800  px-52">
+    <section class="py-6 bg-neutral-800  px-52">
     <div class="">
         <div class="flex flex-col ">
             <div class="flex justify-between">
