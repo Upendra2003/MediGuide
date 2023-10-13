@@ -1,6 +1,9 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+
 
 const Predict = () => {
+
   return (
     <>
       <div className="flex flex-col items-center mt-16">
@@ -19,7 +22,11 @@ const Predict = () => {
       
         </div>
       </div>
-      
+
+      <div className="map">
+        <h1>Nearby Hospitals</h1>
+      </div>
+      <Link to='/hospitals'>Show Hospitals</Link>
     </>
   )
 }
