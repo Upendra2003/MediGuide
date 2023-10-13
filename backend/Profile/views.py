@@ -6,6 +6,22 @@ from rest_framework.authtoken.models import Token
 from .serializers import UserSerializer,UserRegistrationSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class=MyTokenObtainPairSerializer
 
 
 #API for User@permission_classes([IsAuthenticated])
@@ -23,15 +39,16 @@ def getUser(request,id):
     serializer = UserSerializer(user,many = False)
     return Response(serializer.data)
 
-# @api_view(['PUT'])
-# def updateUser(request,id):
-#     data=request.data
-#     user=User.objects.get(pk=id)
-#     serializer=UserSerializer(instance=user,data=data)
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateUser(request,id):
+    data=request.data
+    user=Profile.objects.get(pk=id)
+    serializer=UserSerializer(instance=user,data=data)
 
-#     if serializer.is_valid():
-#         serializer.save()
-#     return Response(serializer.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
