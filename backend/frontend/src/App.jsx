@@ -1,7 +1,7 @@
 import { Routes,Route } from 'react-router-dom'
 import Home from './Pages/Home'
 import Hiw from './pages/Hiw'
-import Predict from './pages/Predict'
+import Predict  from './Pages/Predict'
 import Profile from './pages/Profile'
 import STM from './pages/STM'
 import Register from './pages/Register'
@@ -12,6 +12,8 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { AuthProvider } from './context/AuthContext'
 import LoginPage from './pages/LoginPage'
+import Hospitals from './Pages/Hospitals'
+
 
 export default function App() {
 
@@ -26,6 +28,7 @@ export default function App() {
             <Route path='/Predict' element={<PrivateRoute Component={Predict}/>}/>
             <Route path='/STM' element={<PrivateRoute Component={STM}/>}/>
             <Route path='/Profile' element={<PrivateRoute Component={Profile}/>}/>
+            <Route path='/hospitals' element={<PrivateRoute Component={Hospitals}/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/register' element={<Register/>}/>
             {/* <Route path='/forget' element={<Forget/>}/> */}
