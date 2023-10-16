@@ -37,6 +37,7 @@ function Map(){
     }
 
     const center=useMemo(()=>({lat:+lat,lng:+lng}),[]);
+    const centerNEW=useMemo(()=>({lat:21+lat,lng:21+lng}),[]);
 
     const nearbyHospitals = async()=>{
         let response = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
@@ -59,13 +60,14 @@ function Map(){
     })
     return(
         <>
-        <p className=' '>{lat} {lng}</p>
+        <p className=' '>{lat}{lng}</p>
         <GoogleMap
             zoom={10}
             center={center}
             mapContainerStyle={containerStyle}
         >
             <Marker position={center} />
+            <Marker position={centerNEW} />
         </GoogleMap>
         </>
     )

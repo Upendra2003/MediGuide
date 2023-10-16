@@ -5,7 +5,6 @@ import Predict  from './Pages/Predict'
 import Profile from './pages/Profile'
 import STM from './pages/STM'
 import Register from './pages/Register'
-import Login from './pages/Login'
 import Error from './pages/error'
 import './App.css'
 import PrivateRoute from './utils/PrivateRoute'
@@ -32,6 +31,7 @@ export default function App() {
             <Route path='/hospitals' element={<PrivateRoute Component={Hospitals}/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/register' element={<Register/>}/>
+            {/* <Route path='/forget' element={<Forget/>}/> */}
             <Route path='*' element={<Error/>}/>
         
       </Routes>
