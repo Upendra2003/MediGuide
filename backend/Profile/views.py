@@ -3,19 +3,26 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from .models import Profile
 from rest_framework.authtoken.models import Token
-from .serializers import UserSerializer,UserRegistrationSerializer
+from .serializers import UserSerializer,UserRegistrationSerializer,ProfileSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+import json
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
+        profile=Profile.objects.get(user=user)
+        # id=json.dumps({"p_id": profile.p_id}, default=str)
+        # print(profile.p_id)
+        # serializer=ProfileSerializer(profile).data
+        # print(serializer.username)
         # Add custom claims
         token['username'] = user.username
+        token['p_id'] = str(profile.p_id)
         # ...
 
         return token
@@ -23,31 +30,23 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class=MyTokenObtainPairSerializer
 
-
-#API for User@permission_classes([IsAuthenticated])
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getUsers(request):
-    users = Profile.objects.all()
-    serializer = UserSerializer(users,many = True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getUser(request,id):
-    user = Profile.objects.get(pk = id)
-    serializer = UserSerializer(user,many = False)
-    return Response(serializer.data)
-
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
-def updateUser(request,id):
+# @permission_classes([IsAuthenticated])
+def updateProfile(request,id):
     data=request.data
-    user=Profile.objects.get(pk=id)
-    serializer=UserSerializer(instance=user,data=data)
+    profile=Profile.objects.get(pk=id)
+    print(profile)
+    serializer = ProfileSerializer(instance=profile,data=data)
 
     if serializer.is_valid():
         serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getProfile(request,id):
+    profile=Profile.objects.get(pk=id)
+    serializer = ProfileSerializer(profile,many=False)
     return Response(serializer.data)
 
 @api_view(['DELETE'])

@@ -1,6 +1,69 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import AuthContext from '../context/AuthContext'
 
 const Profile = () => {
+
+    let {user} = useContext(AuthContext)
+
+    const [profile,setProfile] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        gender: "",
+        contact_no:"",
+        current_address: "",
+        permanent_address: "",
+        profile_pic:""
+    });
+
+    const [userData,setUserData] = useState(null)
+
+    const updateProfile = async (e)=>{
+        e.preventDefault()
+        JSON.stringify(user)
+        // console.log(user)
+        console.log(JSON.stringify(profile))
+        let response = await fetch(`http://127.0.0.1:8000/profile/update-profile/${user.p_id}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(profile)
+        })
+
+        console.log(response)
+        if(response.status == 200){
+            alert("Success")
+        }else{
+            alert("Failed")
+        }
+    }
+
+    
+    const getProfile = async (e) =>{
+        let response = await fetch(`http://127.0.0.1:8000/profile/get-profile/${user.p_id}`,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+        });
+        let data = await response.json()
+        setUserData(data)
+        console.log("data",data)
+        console.log("userdara:",userData)
+    }
+ 
+    const handleChange = (e)=>{
+        setProfile({
+            ...profile,
+            [e.target.name]:e.target.value
+        })
+    }
+
+    useEffect(()=>{
+        getProfile()
+    },[user.p_id])
+
   return (
     <div class="container mx-auto my-5 p-5 h-[61vh]">
         <div class="md:flex no-wrap md:-mx-2 ">
@@ -13,7 +76,7 @@ const Profile = () => {
                             src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
                             alt=""/>
                     </div>
-                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">Jane Doe</h1>
+                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{userData.username}</h1>
                     <h3 class="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
                     <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
                         consectetur adipisicing elit.
@@ -27,7 +90,7 @@ const Profile = () => {
                         </li>
                         <li class="flex items-center py-3">
                             <span>Member since</span>
-                            <span class="ml-auto">Nov 07, 2016</span>
+                            <span class="ml-auto">{userData.created.slice(0,10)}</span>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +100,7 @@ const Profile = () => {
             <div class="w-full md:w-9/12 mx-2 h-64">
                 {/* <!-- Profile tab --> */}
                 {/* <!-- About Section --> */}
-                <form action="post">
+                <form onSubmit={updateProfile}>
                     <div class="bg-white p-3 shadow-sm rounded-sm">
                         <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                             <span clas="text-green-500">
@@ -53,36 +116,40 @@ const Profile = () => {
                             <div class="grid md:grid-cols-2 text-sm">
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">First Name</div>
-                                    <input type='text' class =" m-2 rounded border-2 border-black "/>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='first_name' onChange={handleChange}/>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Last Name</div>
-                                    <input type='text' class =" m-2 rounded border-2 border-black "/>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='last_name' onChange={handleChange}/>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Gender</div>
-                                    <input type='text' class =" m-2 rounded border-2 border-black "/>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='gender' onChange={handleChange}/>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Contact No.</div>
-                                    <input type='text' class =" m-2 rounded border-2 border-black "/>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='contact_no' onChange={handleChange}/>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Current Address</div>
-                                    <input type='text' class =" m-2 rounded border-2 border-black "/>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='current_address' onChange={handleChange}/>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Permanant Address</div>
-                                    <input type='text' class =" m-2 rounded border-2 border-black "/>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='permanent_address' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">profile pics</div>
+                                    <input type='file' class =" m-2 rounded border-2 border-black " name='profile_pic' onChange={handleChange}/>
                                 </div>
                                 <div class="grid grid-cols-2">
                                     <div class="px-4 py-2 font-semibold">Email.</div>
                                     <div class="px-4 py-2">
-                                    <input type='text' class =" m-2 rounded border-2 border-black "/>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='email' onChange={handleChange}/>
                                     </div>
                                 </div>
                                 <div class="flex mt-5 mx-48">
-                                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 px-5 py-1  focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-xl text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                                    <input onSubmit={updateProfile} type="submit" class="text-white bg-blue-700 hover:bg-blue-800 px-5 py-1  focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-xl text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Submit" />
                                 </div>
                             </div>
                         </div>
