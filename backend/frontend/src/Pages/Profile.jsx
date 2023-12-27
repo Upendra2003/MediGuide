@@ -1,6 +1,69 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import AuthContext from '../context/AuthContext'
 
 const Profile = () => {
+
+    let {user} = useContext(AuthContext)
+
+    const [profile,setProfile] = useState({
+        first_name: "",
+        last_name: "",
+        email: "",
+        gender: "",
+        contact_no:"",
+        current_address: "",
+        permanent_address: "",
+        profile_pic:""
+    });
+
+    const [userData,setUserData] = useState(null)
+
+    const updateProfile = async (e)=>{
+        e.preventDefault()
+        JSON.stringify(user)
+        // console.log(user)
+        console.log(JSON.stringify(profile))
+        let response = await fetch(`http://127.0.0.1:8000/profile/update-profile/${user.p_id}`,{
+            method:"PUT",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(profile)
+        })
+
+        console.log(response)
+        if(response.status == 200){
+            alert("Success")
+        }else{
+            alert("Failed")
+        }
+    }
+
+    
+    const getProfile = async (e) =>{
+        let response = await fetch(`http://127.0.0.1:8000/profile/get-profile/${user.p_id}`,{
+            method:"GET",
+            headers:{
+                "Content-Type":"application/json"
+            },
+        });
+        let data = await response.json()
+        setUserData(data)
+        console.log("data",data)
+        console.log("userdara:",userData)
+    }
+ 
+    const handleChange = (e)=>{
+        setProfile({
+            ...profile,
+            [e.target.name]:e.target.value
+        })
+    }
+
+    useEffect(()=>{
+        getProfile()
+    },[user.p_id])
+
   return (
     <div class="container mx-auto my-5 p-5 h-[61vh]">
         <div class="md:flex no-wrap md:-mx-2 ">
@@ -13,7 +76,7 @@ const Profile = () => {
                             src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
                             alt=""/>
                     </div>
-                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">Jane Doe</h1>
+                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{userData.username}</h1>
                     <h3 class="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
                     <p class="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet
                         consectetur adipisicing elit.
@@ -27,108 +90,72 @@ const Profile = () => {
                         </li>
                         <li class="flex items-center py-3">
                             <span>Member since</span>
-                            <span class="ml-auto">Nov 07, 2016</span>
+                            <span class="ml-auto">{userData.created.slice(0,10)}</span>
                         </li>
                     </ul>
                 </div>
-                {/* <!-- End of profile card --> */}
-                <div class="my-4"></div>
-                {/* <!-- Friends card --> */}
-                {/* <div class="bg-white p-3 hover:shadow">
-                    <div class="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
-                        <span class="text-green-500">
-                            <svg class="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </span>
-                        <span>Similar Profiles</span>
-                    </div>
-                    <div class="grid grid-cols-3">
-                        <div class="text-center my-2">
-                            <img class="h-16 w-16 rounded-full mx-auto"
-                                src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
-                                alt=""/>
-                            <a href="#" class="text-main-color">Kojstantin</a>
-                        </div>
-                        <div class="text-center my-2">
-                            <img class="h-16 w-16 rounded-full mx-auto"
-                                src="https://avatars2.githubusercontent.com/u/24622175?s=60&amp;v=4"
-                                alt=""/>
-                            <a href="#" class="text-main-color">James</a>
-                        </div>
-                        <div class="text-center my-2">
-                            <img class="h-16 w-16 rounded-full mx-auto"
-                                src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                                alt="" />
-                            <a href="#" class="text-main-color">Natie</a>
-                        </div>
-                        <div class="text-center my-2">
-                            <img class="h-16 w-16 rounded-full mx-auto"
-                                src="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/f04b52da-12f2-449f-b90c-5e4d5e2b1469_361x361.png"
-                                alt="" />
-                            <a href="#" class="text-main-color">Casey</a>
-                        </div>
-                    </div>
-                </div> */}
-                {/* <!-- End of friends card --> */}
+                
             </div>
             {/* <!-- Right Side --> */}
             <div class="w-full md:w-9/12 mx-2 h-64">
                 {/* <!-- Profile tab --> */}
                 {/* <!-- About Section --> */}
-                <div class="bg-white p-3 shadow-sm rounded-sm">
-                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
-                        <span clas="text-green-500">
-                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </span>
-                        <span class="tracking-wide">About</span>
-                    </div>
-                    <div class="text-gray-700">
-                        <div class="grid md:grid-cols-2 text-sm">
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">First Name</div>
-                                <div class="px-4 py-2">Jane</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Last Name</div>
-                                <div class="px-4 py-2">Doe</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Gender</div>
-                                <div class="px-4 py-2">Female</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Contact No.</div>
-                                <div class="px-4 py-2">+11 998001001</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Current Address</div>
-                                <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Permanant Address</div>
-                                <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>
-                            </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Email.</div>
-                                <div class="px-4 py-2">
-                                    <a class="text-blue-800" href="mailto:jane@example.com">jane@example.com</a>
+                <form onSubmit={updateProfile}>
+                    <div class="bg-white p-3 shadow-sm rounded-sm">
+                        <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                            <span clas="text-green-500">
+                                <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </span>
+                            <span class="tracking-wide">About</span>
+                        </div>
+                        <div class="text-gray-700">
+                            <div class="grid md:grid-cols-2 text-sm">
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">First Name</div>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='first_name' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">Last Name</div>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='last_name' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">Gender</div>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='gender' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">Contact No.</div>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='contact_no' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">Current Address</div>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='current_address' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">Permanant Address</div>
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='permanent_address' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">profile pics</div>
+                                    <input type='file' class =" m-2 rounded border-2 border-black " name='profile_pic' onChange={handleChange}/>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="px-4 py-2 font-semibold">Email.</div>
+                                    <div class="px-4 py-2">
+                                    <input type='text' class =" m-2 rounded border-2 border-black " name='email' onChange={handleChange}/>
+                                    </div>
+                                </div>
+                                <div class="flex mt-5 mx-48">
+                                    <input onSubmit={updateProfile} type="submit" class="text-white bg-blue-700 hover:bg-blue-800 px-5 py-1  focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-xl text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Submit" />
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="px-4 py-2 font-semibold">Birthday</div>
-                                <div class="px-4 py-2">Feb 06, 1998</div>
-                            </div>
                         </div>
-                    </div>
                     
-                </div>
+                    </div>
+                </form>
                 {/* <!-- End of about section --> */}
 
                 <div class="my-4"></div>

@@ -32,6 +32,12 @@ class UserRegistrationSerializer(ModelSerializer):
 
         return profile
     
+
+class ProfileSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields="__all__"
+
 # class UserloginSerializer(ModelSerializer):
 #     password = serializers.CharField(write_only = True)
 #     class Meta:
