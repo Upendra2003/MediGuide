@@ -10,22 +10,41 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 import json
 
+# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super().get_token(user)
+
+#         profile=Profile.objects.get(user=user)
+#         # id=json.dumps({"p_id": profile.p_id}, default=str)
+#         # print(profile.p_id)
+#         # serializer=ProfileSerializer(profile).data
+#         # print(serializer.username)
+#         # Add custom claims
+#         token['username'] = user.username
+#         token['p_id'] = str(profile.p_id)
+#         # ...
+
+#         return token
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
-        profile=Profile.objects.get(user=user)
-        # id=json.dumps({"p_id": profile.p_id}, default=str)
-        # print(profile.p_id)
-        # serializer=ProfileSerializer(profile).data
-        # print(serializer.username)
-        # Add custom claims
+        try:
+            profile = Profile.objects.get(user=user)
+            token['p_id'] = str(profile.p_id)
+        except Profile.DoesNotExist:
+            # If profile doesn't exist, handle it gracefully
+            token['p_id'] = None  # Or any default value you prefer
+
+        # Add other custom claims
         token['username'] = user.username
-        token['p_id'] = str(profile.p_id)
         # ...
 
         return token
+
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class=MyTokenObtainPairSerializer
