@@ -1,74 +1,85 @@
-import React,{useEffect, useMemo} from 'react'
-import { GoogleMap, useLoadScript,Marker } from '@react-google-maps/api';
-import useGeolocation from '../hooks/useGeolocation'
-
-const containerStyle={
-    width:'100%',
-    height:'100vh'
+import React, { useEffect, useState } from 'react'
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  Pin,
+  InfoWindow
+} from '@vis.gl/react-google-maps'
+// @ts-ignore
+const containerStyle = {
+  width: '100%',
+  height: '100vh'
 }
 
+export default function Hospitals () {
+  const [lat, setLat] = useState('')
+  const [log, setLog] = useState('')
+  const [hospitals, setHospitals] = useState([])
+  useEffect(() => {
+    const fetchGeolocation = async () => {
+      try {
+        const location = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject)
+        })
 
+        setLat(location.coords.latitude)
+        setLog(location.coords.longitude)
 
-export default function Hospitals() {
+        const placesApiKey = 'AIzaSyDDi-YNuHv2CxzymDJVgmfLxTEuvoihZWI'
+        const radius = 50000
+        //const placesApiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.coords.latitude},${location.coords.longitude}&radius=${radius}&type=hospital&key=${placesApiKey}`;
+        const placesApiUrl = `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.coords.latitude},${location.coords.longitude}&radius=${radius}&type=hospital&key=${placesApiKey}`
 
-    const {isLoaded} = useLoadScript({
-        googleMapsApiKey:import.meta.env.REACT_APP_GOOGLE_MAP_API_KEY,
-      });
-    //   console.log(import.meta.env.REACT_APP_GOOGLE_MAP_API_KEY)
-    
+        const response = await fetch(placesApiUrl)
 
-    if(!isLoaded) return <div>Loading...</div>
-    return (
-        <>
-            <h1 className=' text-center font-bold text-3xl'>Nearby Hospitals</h1> 
-            <Map/>
-        </>
-    )
-}
+        if (!response.ok) {
+          throw new Error(`Failed to fetch: ${response.status}`)
+        }
 
+        const data = await response.json()
 
-function Map(){
-    const location = useGeolocation();
-    let lat,lng;
-
-    if(location.loaded){
-        lat=location.cooordinates.lat;
-        lng=location.cooordinates.lng;
+        if (data.results) {
+          setHospitals(data.results)
+          console.log(data.results)
+        }
+      } catch (error) {
+        console.error('Error fetching geolocation:', error)
+      }
     }
 
-    const center=useMemo(()=>({lat:+lat,lng:+lng}),[]);
-    const centerNEW=useMemo(()=>({lat:21+lat,lng:21+lng}),[]);
+    fetchGeolocation()
+  }, [])
 
-    const nearbyHospitals = async()=>{
-        let response = await fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
-        lat +
-        ',' +
-        lng +
-        '&radius=' +
-        4*1000 +
-       '&type=' +
-       "hospital" +
-        '&key=' +
-        'AIzaSyACzsQipQDZeYAPAK6c5FX-Rwv1Tb5hBAo');
-        let data = response.json();
-        console.log(data)
-        
-    }
-    // console.log(import.meta.env.REACT_APP_GOOGLE_MAP_API_KEY)
-    useEffect(()=>{
-        nearbyHospitals()
-    })
-    return(
-        <>
-        <p className=' '>{lat}{lng}</p>
-        <GoogleMap
-            zoom={10}
-            center={center}
-            mapContainerStyle={containerStyle}
-        >
-            <Marker position={center} />
-            <Marker position={centerNEW} />
-        </GoogleMap>
-        </>
-    )
+  const position = {
+    lat: Number(lat),
+    lng: Number(log)
+  }
+
+  return (
+    <APIProvider apiKey='AIzaSyBXYoc8ktZ74dlhv6E_CUlp2maVTD5U0-E'>
+      <div
+        style={{
+          height: '65.3vh'
+        }}
+      >
+        <Map zoom={9} center={position} mapId='887a654104aa209e'>
+          <AdvancedMarker position={position}>
+            <Pin />
+          </AdvancedMarker>
+          {hospitals.map((hospital, index) => (
+            <AdvancedMarker
+              key={index}
+              position={{
+                lat: hospital.geometry.location.lat,
+                lng: hospital.geometry.location.lng
+              }}
+            >
+              <Pin />
+            </AdvancedMarker>
+          ))}
+        </Map>
+      </div>
+    </APIProvider>
+  )
 }

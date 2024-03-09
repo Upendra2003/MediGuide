@@ -23,12 +23,12 @@ export default function App() {
       <Navbar/>
       <Routes>
         
-            <Route exact path='/' element={<PrivateRoute  Component={Home}/>} />
-            <Route path='/Hiw' element={<PrivateRoute Component={Hiw}/>} />
-            <Route path='/Predict' element={<PrivateRoute Component={Predict}/>}/>
-            <Route path='/STM' element={<PrivateRoute Component={STM}/>}/>
-            <Route path='/Profile' element={<PrivateRoute Component={Profile}/>}/>
-            <Route path='/hospitals' element={<PrivateRoute Component={Hospitals}/>}/>
+            <Route exact path='/' element={<Home/>} />
+            <Route path='/Hiw' element={<Hiw/>} />
+            <Route path='/Predict' element={<Predict/>}/>
+            <Route path='/STM' element={<STM/>}/>
+            <Route path='/Profile' element={<Profile/>}/>
+            <Route path='/hospitals' element={<Hospitals/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/register' element={<Register/>}/>
             {/* <Route path='/forget' element={<Forget/>}/> */}
