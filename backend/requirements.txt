@@ -1,2 +1,5 @@
 jwt-decode
 react-google-maps
+pandas
+scikit-learn
+numpy

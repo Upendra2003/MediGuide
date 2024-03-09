@@ -18,7 +18,8 @@ const Register = () => {
         let response = await fetch('http://127.0.0.1:8000/profile/register/',{
             method:"POST",
             headers:{
-                "Content-Type":"application/json"
+                "Content-Type":"application/json",
+                'X-CSRFToken': getCSRFToken(),
             },
             body:JSON.stringify(userDetails)
         })
