@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'api.apps.ApiConfig',
     'Profile.apps.ProfileConfig',
+    'model.apps.ModelConfig',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -113,6 +114,7 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    'django.middleware.csrf.CsrfViewMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

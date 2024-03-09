@@ -1,8 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 
 
 const Predict = () => {
+
+  const [text,setText]=useState('')
+  const [prediction,setPrediction]=useState({
+    'disease_name':'',
+    'precautions':[]
+  })
+
+  const predictDisease = async (e) => {
+    e.preventDefault();
+  
+    let response = await fetch('http://127.0.0.1:8000/predict_disease/',{
+      method:'POST',
+      headers:{
+        "Content-Type":"application/json",
+      },
+      body:JSON.stringify({ text })
+    });
+    if (response.status==200){
+      console.log('Success')
+    }else{
+      alert('no')
+    }
+    const data = await response.json();
+    // console.log(data);
+    setPrediction({
+      'disease_name':data.disease_name,
+      'precautions':data.precautions
+    })
+    // console.log('fetch',fetch_precautions)
+    // setPrecautions(fetch_precautions)
+    console.log('prec',prediction)
+  };
+  
+
+  const handleChange=(e)=>{
+    setText(e.target.value);
+  }
 
   return (
     <>
@@ -14,14 +51,29 @@ const Predict = () => {
         <div className='bg-white mx-40  h-full rounded-lg flex flex-col '>
         <h1 className='text-2xl text-center pt-5 font-bold'>Let's get Started!</h1>
         <p className='text-center text-xs text-slate-500 pt-3 px-16'>Take the first step towards a healthier you. Input your symptoms now and experience the power of personalized healthcare advice.</p>
-           <form action="/predict" method="POST" className='flex flex-col'>
-           <input type="text" name="symptoms" placeholder="Enter symptoms here" className='border-2 py-1.5 placeholder-gray-600 border-gray-300 rounded-md pl-3 mx-14 '></input>
-           <textarea name="" id="" cols="30" rows="10" placeholder='add more description'  className="h-36 border-2 placeholder-gray-600  rounded-md pl-3 mx-14"></textarea>
+           <form onSubmit={predictDisease} className='flex flex-col'>
+              {/* {% csrf_token %} */}
+              <textarea onChange={handleChange} name="input_text" id="" cols="30" rows="10" placeholder='add more description'  className="h-36 border-2 placeholder-gray-600  rounded-md pl-3 mx-14"></textarea>
+              <button className=' px-3 mx-24 my-5   py-2.5 text-base transition-all duration-200 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '> Predict</button>
            </form> 
-           <button className=' px-3 mx-24 my-5   py-2.5 text-base transition-all duration-200 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '> Predict</button> 
-      
         </div>
       </div>
+
+      <div>
+        <h3>Disease Name: {prediction.disease_name}</h3>
+        {Array.isArray(prediction.precautions)
+          ? prediction.precautions.map((precaution, index) => (
+              <div key={index}>{`Precaution ${index + 1}: ${precaution}`}</div>
+            ))
+          : typeof prediction.precautions === 'object' && prediction.precautions !== null
+          ? Object.entries(prediction.precautions).map(([key, value]) => (
+              <div key={key}>{`${key}: ${value}`}</div>
+            ))
+          : null}
+      </div>
+
+
+
 
       <div className="map">
         <h1>Nearby Hospitals</h1>
