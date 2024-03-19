@@ -9,3 +9,4 @@ urlpatterns = [
     path('profile/',include('Profile.urls')),
     path('predict_disease/',include('model.urls')),
 ]
+# http://127.0.0.1:8000/predict_disease/predict
