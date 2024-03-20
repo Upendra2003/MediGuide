@@ -1,95 +1,12 @@
-// import React, { useState } from 'react'
-// import {Link} from 'react-router-dom'
-
-
-// const Predict = () => {
-
-//   const [text,setText]=useState('')
-//   const [prediction,setPrediction]=useState({
-//     'disease_name':'',
-//     'precautions':[]
-//   })
-
-//   const predictDisease = async (e) => {
-//     e.preventDefault();
-  
-//     let response = await fetch('http://127.0.0.1:8000/predict_disease/',{
-//       method:'POST',
-//       headers:{
-//         "Content-Type":"application/json",
-//       },
-//       body:JSON.stringify({ text })
-//     });
-//     if (response.status==200){
-//       console.log('Success')
-//     }else{
-//       alert('no')
-//     }
-//     const data = await response.json();
-//     // console.log(data);
-//     setPrediction({
-//       'disease_name':data.disease_name,
-//       'precautions':data.precautions
-//     })
-//     // console.log('fetch',fetch_precautions)
-//     // setPrecautions(fetch_precautions)
-//     console.log('prec',prediction)
-//   };
-  
-
-//   const handleChange=(e)=>{
-//     setText(e.target.value);
-//   }
-
-//   return (
-//     <>
-//       <div className="flex flex-col items-center mt-16">
-//         <h1 className=' font-bold text-2xl'>Symptom Predictor</h1><br/>
-//         <div className='px-80 text-center text-slate-500'>Welcome to our Symptom Input Page - your first step towards personalized healthcare. Here, you have the opportunity to share your symptoms, allowing us to provide you with accurate and tailored medical advice.</div>
-//       </div>
-//       <div className='bg-blue-400 mx-72 pt-14 h-5/6  my-14  rounded-lg '>
-//         <div className='bg-white mx-40  h-full rounded-lg flex flex-col '>
-//         <h1 className='text-2xl text-center pt-5 font-bold'>Let's get Started!</h1>
-//         <p className='text-center text-xs text-slate-500 pt-3 px-16'>Take the first step towards a healthier you. Input your symptoms now and experience the power of personalized healthcare advice.</p>
-//            <form onSubmit={predictDisease} className='flex flex-col'>
-//               {/* {% csrf_token %} */}
-//               <textarea onChange={handleChange} name="input_text" id="" cols="30" rows="10" placeholder='add more description'  className="h-36 border-2 placeholder-gray-600  rounded-md pl-3 mx-14"></textarea>
-//               <button className=' px-3 mx-24 my-5   py-2.5 text-base transition-all duration-200 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '> Predict</button>
-//            </form> 
-//         </div>
-//       </div>
-
-//       <div>
-//         <h3>Disease Name: {prediction.disease_name}</h3>
-//         {Array.isArray(prediction.precautions)
-//           ? prediction.precautions.map((precaution, index) => (
-//               <div key={index}>{`Precaution ${index + 1}: ${precaution}`}</div>
-//             ))
-//           : typeof prediction.precautions === 'object' && prediction.precautions !== null
-//           ? Object.entries(prediction.precautions).map(([key, value]) => (
-//               <div key={key}>{`${key}: ${value}`}</div>
-//             ))
-//           : null}
-//       </div>
-
-
-
-
-//       <div className="map">
-//         <h1>Nearby Hospitals</h1>
-//       </div>
-//       <Link to='/hospitals'>Show Hospitals</Link>
-//     </>
-//   )
-// }
-
-// export default Predict
-
-
 import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
+import symptomsData from './symptoms';
+import '../components/modal.css';
 
 export default function Predict() {
     const [symptomsList, setSymptomsList] = useState([]);
+    const[modal,setModal] = useState(false);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10); // Number of items per page
     const [totalSymptoms, setTotalSymptoms] = useState(0);
@@ -118,50 +35,67 @@ export default function Predict() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/predict_disease/get_symptoms/?page=${currentPage}&page_size=${pageSize}`);
+            const response = await fetch(`http://127.0.0.1:8000/predict_disease/get_symptoms/`);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
 
             const data = await response.json();
-            setSymptomsList(data.symptoms);
-            setTotalSymptoms(data.total_symptoms);
+            
+            // setSymptomsList(data.symptoms);
+            // setTotalSymptoms(data.total_symptoms);
+            // console.log(symptomsList)
         } catch (error) {
             console.log('Error fetching data:', error);
         }
     };
 
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
+    const handleChange =(symptomsList)=>{
+        setSymptomsList(symptomsList);
     };
+    
+    const handleCardClick = () => {
+        const modal = document.querySelector('.modal-content');
+        modal.classList.toggle('show-back');
+      };
+    const togglemodal =()=>{
+        setModal(!modal);
+    }
+    // const handlePageChange = (newPage) => {
+    //     setCurrentPage(newPage);
+    // };
 
-    const handleNextPage = () => {
-        if (currentPage < Math.ceil(totalSymptoms / pageSize)) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
+    // const handleNextPage = () => {
+    //     if (currentPage < Math.ceil(totalSymptoms / pageSize)) {
+    //         setCurrentPage(currentPage + 1);
+    //     }
+    // };
 
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
+    // const handlePrevPage = () => {
+    //     if (currentPage > 1) {
+    //         setCurrentPage(currentPage - 1);
+    //     }
+    // };
 
-    const handleSymptomSelect = (symptom) => {
-        setSelectedSymptoms([...selectedSymptoms, symptom]);
-    };
+    // const handleSymptomSelect = (symptom) => {
+    //     setSelectedSymptoms([...selectedSymptoms, symptom]);
+    // };
 
+   
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Selected symptoms:', selectedSymptoms);
+        console.log('Selected symptoms:', symptomsList);
         try {
             const response = await fetch('http://127.0.0.1:8000/predict_disease/predict/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ symptoms: selectedSymptoms }),
+                body: JSON.stringify({
+                    symptoms: symptomsList.map(symptom => symptom.value)
+                })
+                
             });
             
             if (!response.ok) {
@@ -182,6 +116,7 @@ export default function Predict() {
                 precautions: data.precautions,
                 disease_description:data.description
             });
+            console.log(prediction)
         } catch (error) {
             console.error('Error sending data to backend:', error);
         }
@@ -189,12 +124,19 @@ export default function Predict() {
 
     return (
         <div>
-            <h2>Symptoms List:</h2>
+        <div>
+        <div className="flex flex-col items-center mt-6">
+         <h1 className=' font-bold text-2xl'>Symptom Predictor</h1><br/>
+         <div className='px-80 text-center text-slate-500'>Welcome to our Symptom Input Page - your first step towards personalized healthcare. Here, you have the opportunity to share your symptoms, allowing us to provide you with accurate and tailored medical advice.</div>
+       </div>
+       <div className=' mx-72 pt-4 h-5/6  my-10  rounded-lg '>
+         <div className='bg-white mt-2  h-full rounded-lg flex flex-col'>
+        <h2 className='text-2xl text-center pt-5 font-bold'>Symptoms List:</h2>
             <form onSubmit={handleSubmit}>
-                <ul>
+                {/* <ul>
                     {symptomsList.map((symptom, index) => (
-                        <li key={index}>
-                            <label>
+                        <li key={index} className='flex items-center mx-2'>
+                            <label className=' text-blue-600'>
                                 <input
                                     type="checkbox"
                                     value={symptom}
@@ -205,33 +147,79 @@ export default function Predict() {
                             </label>
                         </li>
                     ))}
-                </ul>
-                <div>
-                    <button onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
-                    <span> Page {currentPage} of {Math.ceil(totalSymptoms / pageSize)} </span>
-                    <button onClick={handleNextPage} disabled={currentPage === Math.ceil(totalSymptoms / pageSize)}>Next</button>
+                </ul> */}
+
+                <Select
+    defaultValue={[]}
+    isMulti
+    options={symptomsData}
+    value={symptomsList}
+    onChange={handleChange}
+    className='block w-full p-2  text-md text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500'
+  />
+                <div className="m-3 float-right">
+                    <button type='submit' onClick={togglemodal} class="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group">
+                    <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
+                    <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
+                    <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+                    <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-600 group-hover:h-full ease"></span>
+                    <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
+                    <span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease">Predict</span>
+                    </button>
                 </div>
-                <button type="submit">Submit</button>
             </form>
+         </div>
+       </div>
+        </div>
+           
             <hr />
-            {Object.keys(prediction.disease_name).length > 0 && (
-                <div>
-                    <h3>Disease Name: {prediction.disease_name}</h3>
-                    <h3>Disease Desc: {prediction.disease_description}</h3>
-                    <h4>Precautions:</h4>
-                    {prediction.precautions.length > 0 ? (
+
+            
+
+            {prediction.disease_name && modal && (
+    <div className='modal'>
+        <div className="overlay">
+            <div className="modal-content">
+                    <div class="modal__face--front flex flex-col rounded-xl p-4 md:p-10">
+                            <button className='close-modal' onClick={togglemodal}>close</button>
+                        <h3 class="text-lg font-bold text-gray-800">{prediction.disease_name}</h3>
+                        <p class="mt-2 text-gray-500 dark:text-gray-400">{prediction.disease_description}</p>
+                        <button class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none " onClick={handleCardClick}>
+                        click to see precaution
+                        <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    
+                    </div>
+                    <div className=" modal__face--back flex flex-col rounded-xl px-4 pt-4 md:pt-10 md:pb-3 md:px-10">
+                    <h4 className='text-lg font-bold text-gray-800'>Precautions:</h4>
+                {prediction.precautions && Object.keys(prediction.precautions).length > 0 ? (
+                    <div>
                         <ul>
-                            {prediction.precautions.map((precaution, index) => (
-                                <li key={index}>{precaution}</li>
+                            {Object.values(prediction.precautions).map((precaution, index) => (
+                                <li key={index} className='my-4'>{index+1}.{precaution}</li>
                             ))}
                         </ul>
-                    ) : (
-                        <p>No precautions available</p>
-                    )}
-                </div>
-            )}
+                        <button class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none " onClick={handleCardClick}>
+                        Go back
+                        <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                ) : (
+                    <p>No precautions available</p>
+                )
+                }
+
+</div>
+                
+            </div>
+
+
+        </div>
+    </div>
+)}
+
+
 
         </div>
     );
 }
-

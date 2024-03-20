@@ -1,0 +1,74 @@
+body.active-modal {
+    overflow-y: hidden;
+}
+
+.btn-modal {
+    padding: 10px 20px;
+    display: block;
+    margin: 100px auto 0;
+    font-size: 18px;
+}
+
+.modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.overlay {
+    background: rgba(49,49,49,0.8);
+}
+.modal-content {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    /* background: #f1f1f1; */
+    /* padding: 14px 28px; */
+    border-radius: 13px;
+    /* max-width: 600px; */
+    min-width: 600px;
+    transform-style: preserve-3d;
+    transform-origin: center right;
+    transition: transform 1s;
+    backface-visibility: hidden;
+}
+
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 7px;
+}
+
+
+.modal__face--front {
+    position: absolute;
+    background: white;
+    transform: rotateY(0deg); /* Set initial rotation */
+    backface-visibility: hidden;
+    transition: transform 1s; /* Add transition for smooth rotation */
+}
+
+.modal__face--back {
+    min-width: 600px;
+    position:absolute;
+    background: white;
+    transform: rotateY(180deg); /* Set initial rotation */
+    backface-visibility: hidden;
+    transition: transform 1s; /* Add transition for smooth rotation */
+}
+
+.show-back .modal__face--front {
+    transform: rotateY(-180deg); /* Rotate the front face */
+}
+
+.show-back .modal__face--back {
+    transform: rotateY(0deg); /* Rotate the back face */
+}

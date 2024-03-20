@@ -3,6 +3,7 @@ import Home from './Pages/Home'
 import Hiw from './pages/Hiw'
 import Predict  from './Pages/Predict'
 import Profile from './pages/Profile'
+import Temp from './Pages/temp'
 import STM from './pages/STM'
 import Register from './pages/Register'
 import Error from './pages/error'
@@ -31,7 +32,7 @@ export default function App() {
             <Route path='/hospitals' element={<Hospitals/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/register' element={<Register/>}/>
-            {/* <Route path='/forget' element={<Forget/>}/> */}
+            <Route path='/temp' element={<Temp/>}/>
             <Route path='*' element={<Error/>}/>
         
       </Routes>

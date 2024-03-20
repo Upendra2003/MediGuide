@@ -41,31 +41,33 @@ description=pd.read_csv(description_path)
 #     return Response(response_data)
 
 
-@api_view(['GET','POST'])
+@api_view(['GET'])
 def get_symptoms(request):
-    symptoms_per_page = 10  # Number of symptoms per page
+    # symptoms_per_page = 10  # Number of symptoms per page
 
-    # Get the parameters from the request or use default values
-    page = int(request.GET.get('page', 1))
-    page_size = int(request.GET.get('page_size', symptoms_per_page))
+    # # Get the parameters from the request or use default values
+    # page = int(request.GET.get('page', 1))
+    # page_size = int(request.GET.get('page_size', symptoms_per_page))
 
-    # Example list of symptom names
-    all_symptoms = [
-        f'{symptom}'
-        for symptom in symptoms
-    ]
+    # # Example list of symptom names
+    # all_symptoms = [
+    #     f'{symptom}'
+    #     for symptom in symptoms
+    # ]
 
-    # Calculate the start and end index for the current page
-    start_index = (page - 1) * page_size
-    end_index = min(start_index + page_size, len(all_symptoms))
+    # # Calculate the start and end index for the current page
+    # start_index = (page - 1) * page_size
+    # end_index = min(start_index + page_size, len(all_symptoms))
 
-    # Extract symptoms for the current page
-    symptoms_for_page = all_symptoms[start_index:end_index]
-
-    return Response({
-        'symptoms': symptoms_for_page,
-        'total_symptoms': len(all_symptoms)
-    })
+    # # Extract symptoms for the current page
+    # symptoms_for_page = all_symptoms[start_index:end_index]
+    print(1)
+    # for i in symptoms:
+    #     print(i)
+    # return Response({
+    #     f'symptom {index}': symptom
+    #     for index,symptom in enumerate(symptoms,start=1)
+    # })
 
 def process_list(symptoms_list):
     symptoms_modified=symptoms[:-1]
@@ -91,7 +93,7 @@ def process_selected_symptoms(request):
         #handle description
         description['Disease']=description['Disease'].apply(lambda x:x.lower())
         disease_description=description[description['Disease']==predicted_disease]['Description'].iloc[0]
-        # print(disease_description)
+        print(predicted_disease)
         response_data = {
             'disease_name':predicted_disease.capitalize(),
             'precautions':{
