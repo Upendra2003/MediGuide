@@ -14,6 +14,6 @@ urlpatterns=[
     
     path('register/',views.register_userProfile,name='register'),   
 
-    path('update-profile/<str:id>',views.updateProfile,name='update-profile'),
+    path('update-profile/<uuid:id>/',views.updateProfile,name='update-profile'),
     path('get-profile/<str:id>',views.getProfile,name='get-profile'),
 ]

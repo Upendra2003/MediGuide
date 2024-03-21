@@ -24,13 +24,24 @@ class Profile(models.Model):
         return str(self.username)
     
 
+# def createProfile(sender, instance, created, **kwargs):
+#     if created:
+#         user = instance
+#         profile = Profile.objects.create(
+#             username = user.username,
+#             email = user.email,
+#         )
+
+# post_save.connect(createProfile, sender = User)
+
 def createProfile(sender, instance, created, **kwargs):
     if created:
-        user = instance
-        profile = Profile.objects.create(
-            username = user.username,
-            email = user.email,
-        )
+        # If a new User is created, create a Profile for that User
+        profile = Profile.objects.create(user=instance,username = instance.username, email=instance.email)
+
+    # If an existing User is saved, update the Profile fields with the User's data
+    instance.profile.save()
+
 
 post_save.connect(createProfile, sender = User)
 
