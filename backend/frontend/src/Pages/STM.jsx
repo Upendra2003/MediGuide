@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import img from '../assets/hehe.png'
 import img2 from '../assets/left_img.png'
 import bg from '../assets/Background.png'
@@ -6,16 +6,23 @@ import bg2 from '../assets/Pattern.png'
 import { IoMdImages } from "react-icons/io";
 
 
-const STM = () => {
-
-  const handleOnSubmit=async()=>{
-    let response=await fetch('http://127.0.0.1:8000/predict_disease/predict/scan_image',{
+const STM = () => { 
+  const [file,setFile] = useState(null)
+  const handleFileChange=(e)=>{
+    e.preventDefault()
+    setFile(e.target.files[0])
+  }
+  const handleOnSubmit=async(e)=>{
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('image', file);
+    console.log(formData)
+    let response=await fetch('http://127.0.0.1:8000/predict_disease/scan_image/',{
       method:'POST',
-      headers:{
-        "Content-Type":"application/json"
-      },
-
-    })
+      body:formData,
+    });
+    const data = await response.json();
+    console.log(data)
   }
 
   return (
@@ -24,7 +31,7 @@ const STM = () => {
           {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
           <div className="container m-auto mt-7 z-0 relative">
             <img src={bg2} alt="" className=' absolute' />
-            <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:0}} />
+            <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
             <div className='flex justify-around items-center'>
               <div className="instructions">
                 <img className=' w-96' src={img} alt="" />
@@ -37,14 +44,14 @@ const STM = () => {
         </div>
 
         <div>
-          <form onSubmit={handleOnSubmit}>
+          <form onSubmit={handleOnSubmit} method='POST' enctype='multipart/form-data'>
             <label>
               <div className='border-dashed border-2 border-blue-500 m-10 rounded-lg flex flex-col justify-center items-center p-10'>
               <h1 className='font-bold text-blue-500'>Add Photo</h1>
                 <IoMdImages className='text-6xl text-blue-300' />
                 <p className='text-blue-500 text-sm'>Drag and drop or <span className='font-bold'>browse</span> to upload</p>
                 <p className=' font-light text-sm text-blue-500'>PNG,JPG,JPEG,GIF upto 10MB</p>
-                <input type="file" accept="image/*" className='hidden' name='medicine_image' />
+                <input type="file" accept="image/*" className='hidden' name='medicine_image' onChange={handleFileChange}/>
               </div>
               
             </label>

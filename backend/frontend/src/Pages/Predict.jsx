@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 import symptomsData from './symptoms';
 import '../components/modal.css';
+import bg from '../assets/Background.png'
+import bg2 from '../assets/Pattern.png'
 
 export default function Predict() {
     const [symptomsList, setSymptomsList] = useState([]);
@@ -125,10 +127,21 @@ export default function Predict() {
     return (
         <div>
         <div>
-        <div className="flex flex-col items-center mt-6">
-         <h1 className=' font-bold text-2xl'>Symptom Predictor</h1><br/>
-         <div className='px-80 text-center text-slate-500'>Welcome to our Symptom Input Page - your first step towards personalized healthcare. Here, you have the opportunity to share your symptoms, allowing us to provide you with accurate and tailored medical advice.</div>
-       </div>
+        <div>
+          {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
+          <div className="container m-auto mt-7 z-0 relative">
+            <img src={bg2} alt="" className=' absolute' />
+            <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
+            <div>
+                <div className="flex flex-col items-center mt-6">
+                    <h1 className=' font-bold text-2xl'>Symptom Predictor</h1><br/>
+                    <div className='px-80 text-center text-slate-500'>Welcome to our Symptom Input Page - your first step towards personalized healthcare. Here, you have the opportunity to share your symptoms, allowing us to provide you with accurate and tailored medical advice.</div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        
        <div className=' mx-72 pt-4 h-5/6  my-10  rounded-lg '>
          <div className='bg-white mt-2  h-full rounded-lg flex flex-col'>
         <h2 className='text-2xl text-center pt-5 font-bold'>Symptoms List:</h2>

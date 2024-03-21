@@ -108,4 +108,7 @@ def process_selected_symptoms(request):
     
 @api_view(['POST'])
 def scan_image(request):
-    pass
+    if request.method=='POST' and request.FILES['image']:
+        img=request.FILES['image']
+        print(img)  
+        return Response({'success':200})
