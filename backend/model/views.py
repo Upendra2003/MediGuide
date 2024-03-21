@@ -97,7 +97,7 @@ def process_selected_symptoms(request):
         response_data = {
             'disease_name':predicted_disease.capitalize(),
             'precautions':{
-                f'Precaution {index}': precaution
+                f'Precaution {index}': precaution.capitalize()
                 for index, precaution in enumerate(precautions, start=1)
             },
             'description':disease_description
@@ -105,3 +105,7 @@ def process_selected_symptoms(request):
         return Response(response_data)
     else:
         return Response({'error': 'Only POST requests are allowed'})
+    
+@api_view(['POST'])
+def scan_image(request):
+    pass
