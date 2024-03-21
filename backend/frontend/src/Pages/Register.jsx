@@ -13,6 +13,12 @@ const Register = () => {
         password2:"",
     })
 
+    function getCSRFToken() {
+        const cookieValue = document.cookie.match(/csrftoken=([^ ;]+)/);
+        return cookieValue ? cookieValue[1] : null;
+    }
+    
+
     const registerUser= async (e)=>{
         e.preventDefault();
         let response = await fetch('http://127.0.0.1:8000/profile/register/',{
