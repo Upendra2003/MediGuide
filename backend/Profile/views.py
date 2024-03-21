@@ -49,17 +49,20 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class=MyTokenObtainPairSerializer
 
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 @api_view(['PUT'])
-# @permission_classes([IsAuthenticated])
-def updateProfile(request,id):
-    data=request.data
-    profile=Profile.objects.get(pk=id)
-    print(profile)
-    serializer = ProfileSerializer(instance=profile,data=data)
-
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
+def updateProfile(request, id):
+    try:
+        profile = get_object_or_404(Profile, pk=id)
+        serializer = ProfileSerializer(instance=profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    except Profile.DoesNotExist:
+        return Response("Profile not found", status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET'])
