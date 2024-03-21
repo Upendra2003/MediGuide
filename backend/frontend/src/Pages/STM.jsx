@@ -1,21 +1,73 @@
-import React from 'react'
+import React, { useState } from 'react'
+import img from '../assets/hehe.png'
+import img2 from '../assets/left_img.png'
+import bg from '../assets/Background.png'
+import bg2 from '../assets/Pattern.png'
+import { IoMdImages } from "react-icons/io";
 
-const STM = () => {
+
+const STM = () => { 
+  const [file,setFile] = useState(null)
+  const handleFileChange=(e)=>{
+    e.preventDefault()
+    setFile(e.target.files[0])
+  }
+  const handleOnSubmit=async(e)=>{
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('image', file);
+    console.log(formData)
+    let response=await fetch('http://127.0.0.1:8000/predict_disease/scan_image/',{
+      method:'POST',
+      body:formData,
+    });
+    const data = await response.json();
+    console.log(data)
+  }
+
   return (
-    
-<div class="flex items-center justify-center w-full my-4 ">
-    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-[64vh] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-            </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+    <>
+        <div>
+          {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
+          <div className="container m-auto mt-7 z-0 relative">
+            <img src={bg2} alt="" className=' absolute' />
+            <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
+            <div className='flex justify-around items-center'>
+              <div className="instructions">
+                <img className=' w-96' src={img} alt="" />
+              </div>
+              <div className="img">
+                <img className='w-72' src={img2} alt="" />
+              </div>
+            </div>
+          </div>
         </div>
-        <input id="dropzone-file" type="file" class="hidden" />
-    </label>
-</div> 
 
+        <div>
+          <form onSubmit={handleOnSubmit} method='POST' enctype='multipart/form-data'>
+            <label>
+              <div className='border-dashed border-2 border-blue-500 m-10 rounded-lg flex flex-col justify-center items-center p-10'>
+              <h1 className='font-bold text-blue-500'>Add Photo</h1>
+                <IoMdImages className='text-6xl text-blue-300' />
+                <p className='text-blue-500 text-sm'>Drag and drop or <span className='font-bold'>browse</span> to upload</p>
+                <p className=' font-light text-sm text-blue-500'>PNG,JPG,JPEG,GIF upto 10MB</p>
+                <input type="file" accept="image/*" className='hidden' name='medicine_image' onChange={handleFileChange}/>
+              </div>
+              
+            </label>
+              <div className=' flex justify-center items-center'>
+                      <button type='submit' class="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-blue-100 border border-gray-100 rounded-lg shadow-inner group w-11/12 mb-5">
+                      <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-blue-600 group-hover:w-full ease"></span>
+                      <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-blue-600 group-hover:w-full ease"></span>
+                      <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-blue-400 group-hover:h-full ease"></span>
+                      <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-blue-400 group-hover:h-full ease"></span>
+                      <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-blue-400 opacity-0 group-hover:opacity-100"></span>
+                      <span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease">Scan</span>
+                    </button>
+              </div>
+          </form>
+        </div>
+    </>
   )
 }
 

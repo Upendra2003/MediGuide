@@ -8,7 +8,7 @@ const Navbar = () => {
   let {user,logoutUser} = useContext(AuthContext)
 
   return (
-    <nav className='flex items-center justify-between h-16 lg:h-20' >
+    <nav className='flex items-center justify-between h-16 lg:h-20 relative' style={{zIndex:1}} >
       <div className='flex shrink-0'>
         <NavLink
           to={'/'}
