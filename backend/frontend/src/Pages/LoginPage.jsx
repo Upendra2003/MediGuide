@@ -1,14 +1,23 @@
 import React, { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import { Link } from 'react-router-dom'
+import bg from '../assets/Background.png'
+import bg2 from '../assets/Pattern.png'
 
 export default function LoginPage() {
 
     let {loginUser} = useContext(AuthContext)
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
-      <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
+      <>
+      <div>
+          {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
+          <div className="container m-auto mt-7 z-0 relative">
+            <img src={bg2} alt="" className=' absolute' style={{zIndex:-1}} />
+            <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
+            <div className='flex justify-around items-center'>
+            <div className=" bg-white flex flex-col justify-center border rounded-lg mb-4">
+      <div className="p-5 xs:p-0 mx-auto md:w-full md:max-w-md">
         <h1 className="font-bold text-center text-2xl mb-5">MedSP</h1>  
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
           <form onSubmit={loginUser}  className="px-5 py-7">
@@ -71,5 +80,10 @@ export default function LoginPage() {
           </div>
       </div>
     </div>
+            </div>
+          </div>
+        </div>
+        
+    </>
     )
 }
