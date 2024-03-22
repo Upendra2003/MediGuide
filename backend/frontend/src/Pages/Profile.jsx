@@ -17,6 +17,9 @@ const Profile = () => {
         current_address: '',
         permanent_address: '',
         profile_pic: '',
+        height:'',
+        weight:'',
+        bmi:'',
     });
 
     const [userData, setUserData] = useState(null);
@@ -55,9 +58,51 @@ const Profile = () => {
         });
     };
 
-    const toggleUpdateProfile = () => {
-        setShowUpdateProfile(!showUpdateProfile);
-    };
+    // const toggleUpdateProfile = () => {
+    //     setShowUpdateProfile(!showUpdateProfile);
+    // };
+
+    const BMICalculator = () => {
+        const [bmi, setBMI] = useState(null);
+    
+        useEffect(() => {
+          const { height, weight } = profile;
+          if (height && weight) {
+            const heightMeters = height / 100;
+            const bmiValue = weight / (heightMeters * heightMeters);
+            setBMI(bmiValue.toFixed(2));
+          } else {
+            setBMI(null);
+          }
+        }, [profile]);
+    
+        const getBMIStatus = (bmiValue) => {
+          if (bmiValue < 18.5) {
+            return 'Underweight';
+          } else if (bmiValue >= 18.5 && bmiValue < 24.9) {
+            return 'Normal weight';
+          } else if (bmiValue >= 25 && bmiValue < 29.9) {
+            return 'Overweight';
+          } else {
+            return 'Obese';
+          }
+        };
+    
+        const renderBMIMessage = (bmiValue) => {
+          if (bmiValue) {
+            const status = getBMIStatus(parseFloat(bmiValue));
+            return `BMI: ${bmiValue} (${status})`;
+          } else {
+            return 'Calculate BMI';
+          }
+        };
+    
+        return (
+          <span>
+            {renderBMIMessage(bmi)}
+          </span>
+        );
+      };
 
     const getProfile = async () => {
         try {
@@ -85,18 +130,18 @@ const Profile = () => {
         <>
         <div>
           {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
-          <div className="container m-auto mt-7 z-0 relative">
+          <div className="container m-auto mt-3 z-0 relative">
             <img src={bg2} alt="" className=' absolute' style={{zIndex:-1}}/>
             <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
-            <div className="container mx-auto mb-12 p-5 h-full">
+            <div className="container mx-auto mb-24 p-5 h-full">
             <div className="md:flex no-wrap md:-mx-2">
                 {/* Left Side */}
-                <div className="w-full h-full md:w-4/12 md:mx-16">
+                <div className="w-full h-full md:w-4/12 md:mx-16 my-9 rounded-lg shadow-lg">
                     {/* Profile Card */}
                     <div className="bg-cover text-center rounded-lg shadow-lg h-160 w-94" style={{ backgroundImage: `url('${profile_bg}')` }}>
                         <div className="image overflow-hidden">
                             <img
-                                className="h-24 w-24 mx-auto rounded-full my-8"
+                                className="h-24 w-24 mx-auto rounded-full my-8 ring-2 ring-gray-700 dark:ring-gray-700"
                                 // src={userData && userData.profile_pic}
                                 src={default_profile}
                             />
@@ -124,7 +169,7 @@ const Profile = () => {
                             </li>
                         </ul> */}
                         
-                        <button onClick={toggleUpdateProfile} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4">Edit Profile</button>
+                        <button type="button" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none   font-medium rounded-lg text-sm px-5 py-3 text-center mt-4 mb-4"><BMICalculator /></button>
                     </div>
                 </div>
                 {/* Right Side */}
@@ -169,6 +214,16 @@ const Profile = () => {
                                         <div class="relative z-0 w-full mb-5 group text-grey-900">
                                             <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+                                        </div>
+                                        {/* Height */}
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="height" name="height" id="height" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Height</label>
+                                        </div>
+                                        {/* Weight */}
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="weight" name="weight" id="weight" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Weight</label>
                                         </div>
                                         {/* Current Address */}
                                         <div class="relative z-0 w-full mb-5 group text-grey-900">
