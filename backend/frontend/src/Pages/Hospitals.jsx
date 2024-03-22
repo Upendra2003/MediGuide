@@ -115,10 +115,10 @@ const Hospitals = () => {
             .openPopup();
 
           // Fetch hospitals using Overpass API with increased radius
-          const radius = 1000; // Increase the radius to 10,000 meters (10 kilometers)
+          const radius = 5000; // Increase the radius to 10,000 meters (10 kilometers)
           const response = await fetch(`https://lz4.overpass-api.de/api/interpreter?data=[out:json];(node["amenity"="hospital"](around:${radius},${latitude},${longitude}););out;`);
           const data = await response.json();
-
+          console.log(data)
           // Add hospital markers to the map
           data.elements.forEach(element => {
             const marker = L.marker([element.lat, element.lon]).addTo(map);
@@ -139,6 +139,12 @@ const Hospitals = () => {
 };
 
 export default Hospitals;
+
+
+
+
+
+
 
 
 

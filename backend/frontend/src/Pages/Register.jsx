@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
+import bg from '../assets/Background.png'
+import bg2 from '../assets/Pattern.png'
 
 const Register = () => {
 
@@ -45,9 +46,16 @@ const Register = () => {
         
     }
   return (
-    <section className="">
-    <div className="grid  grid-cols-1 bg-gray-100">
-        <div className="flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24">
+    <>
+    <div>
+          {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
+          <div className="container m-auto mt-7 z-0 relative">
+            <img src={bg2} alt="" className=' absolute' style={{zIndex:-1}} />
+            <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
+            <div className='flex justify-around items-center'>
+            <section className="">
+    <div className="grid  grid-cols-1 bg-gray-100 rounded-2xl mb-4">
+        <div className="flex items-center justify-center px-4 py-10 bg-white sm:px-6 lg:px-8 sm:py-16 lg:py-24 border rounded-2xl">
             <div className="xl:w-full xl:max-w-sm 2xl:max-w-md xl:mx-auto">
                 <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl">Sign up to Celebration</h2>
                 <p className="mt-2 text-base text-gray-600">Already have an account? <Link to={'/Login'} title="" className="font-medium text-blue-600 transition-all duration-200 hover:text-blue-700 hover:underline focus:text-blue-700">Login</Link></p>
@@ -145,7 +153,11 @@ const Register = () => {
     </div>
     
 </section>
-
+            </div>
+          </div>
+        </div>
+    
+</>
   )
 }
 
