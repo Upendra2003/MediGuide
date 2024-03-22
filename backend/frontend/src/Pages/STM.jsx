@@ -17,12 +17,25 @@ const STM = () => {
     const formData = new FormData();
     formData.append('image', file);
     console.log(formData)
-    let response=await fetch('http://127.0.0.1:8000/predict_disease/scan_image/',{
-      method:'POST',
-      body:formData,
-    });
-    const data = await response.json();
-    console.log(data)
+    try {
+      let response = await fetch('http://127.0.0.1:8000/predict_disease/scan_image/', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error('Failed to fetch data from server');
+      }
+  
+      // Parse the response directly as an array of objects
+      const data = await response.json();
+  
+      // Log the response data
+      console.log(data);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   }
 
   return (
