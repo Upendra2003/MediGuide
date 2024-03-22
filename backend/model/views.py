@@ -7,6 +7,7 @@ import nltk
 import os
 import numpy as np
 import pandas as pd
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # Create your views here.
 current_path = os.path.dirname(os.path.abspath(__file__))
@@ -14,11 +15,13 @@ clf_path = os.path.join(current_path, 'modified_clf.pkl')
 symptoms_path = os.path.join(current_path, 'symptoms.pkl')
 precautions_path = os.path.join(current_path, 'precautions.pkl')
 description_path = os.path.join(current_path, 'symptom_Description.csv')
+medicine_path = os.path.join(current_path, 'updated_med.csv')
 
 clf=pickle.load(open(clf_path,'rb'))
 precautions_df=pickle.load(open(precautions_path,'rb'))
 symptoms=pickle.load(open(symptoms_path,'rb'))
 description=pd.read_csv(description_path)
+med_df=pd.read_csv(medicine_path)
 
 # @api_view(['POST'])
 # def predict_disease(request):
@@ -105,10 +108,39 @@ def process_selected_symptoms(request):
         return Response(response_data)
     else:
         return Response({'error': 'Only POST requests are allowed'})
-    
+
+import easyocr 
+from PIL import Image
+from io import BytesIO
+
 @api_view(['POST'])
 def scan_image(request):
     if request.method=='POST' and request.FILES['image']:
         img=request.FILES['image']
-        print(img)  
-        return Response({'success':200})
+        if isinstance(img, InMemoryUploadedFile):
+            file_content = img.read()
+            image = Image.open(BytesIO(file_content))
+            image_array = np.array(image)
+            print(type(image_array))  
+            reader = easyocr.Reader(['en'])
+            text = reader.readtext(image_array, detail = 0)
+            # print(text)
+            med=text[0].split()[0]
+            medicines=med_df[med_df['Composition'].str.contains(med)].head(10)
+            # print(medicines)
+            response_data=[]
+            for index,row in medicines.iterrows():
+                medicine_dict={
+                    'medicine_name':row['Name'],
+                    'medicine_composition':row['Composition'],
+                    'uses':row['Uses'],
+                    'how_to_use':row['How_to_use']
+                }
+                response_data.append(medicine_dict)
+            if not response_data:
+                print('empty')
+                return Response({'Error':'No Medicine Found'})
+            else:
+                return Response(response_data)
+        else:
+            return Response({'error': 'Invalid file type'})
