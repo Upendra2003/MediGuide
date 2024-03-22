@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../context/AuthContext';
+import profile_bg from '../assets/profile_bg.png'
+import default_profile from '../assets/default_profile.png'
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -78,30 +80,30 @@ const Profile = () => {
     }, [user.p_id]);
 
     return (
-        <div className="container mx-auto my-5 p-5 h-[61vh]">
+        <div className="container mx-auto my-9 p-5 h-full">
             <div className="md:flex no-wrap md:-mx-2">
                 {/* Left Side */}
-                <div className="w-full md:w-3/12 md:mx-2">
+                <div className="w-full h-full md:w-4/12 md:mx-16">
                     {/* Profile Card */}
-                    <div className="bg-white p-3 border-t-4 border-green-400">
+                    <div className="bg-cover text-center rounded-lg shadow-lg h-160 w-94" style={{ backgroundImage: `url('${profile_bg}')` }}>
                         <div className="image overflow-hidden">
                             <img
-                                className="h-auto w-full mx-auto"
+                                className="h-24 w-24 mx-auto rounded-full my-8"
                                 // src={userData && userData.profile_pic}
-                                alt=""
+                                src={default_profile}
                             />
                         </div>
-                        <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{userData && userData.first_name} {userData && userData.last_name}</h1>
-                        <h3 className="text-gray-600 font-lg text-semibold leading-6">{userData && userData.email}</h3>
-                        <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
+                        <h1 className="text-gray-900 font-bold text-xl leading-8 mb-4">{userData && userData.first_name} {userData && userData.last_name}</h1>
+                        <h3 className="text-gray-900 font-lg text-semibold leading-6 mb-4">{userData && userData.email}</h3>
+                        <p className="text-sm text-gray-800 leading-6 mb-4">
                             I am from {userData && userData.permanent_address} and 
                             I am currently in {userData && userData.current_address}
                             
                         </p>
-                        <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">
+                        <p className="text-sm text-gray-600 leading-6">
                             contact no : {userData && userData.contact_no}
                         </p>
-                        <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                        {/* <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
                             <li className="flex items-center py-3">
                                 <span>Status</span>
                                 <span className="ml-auto">
@@ -112,17 +114,18 @@ const Profile = () => {
                                 <span>Member since</span>
                                 <span className="ml-auto">{userData && userData.created && userData.created.slice(0, 10)}</span>
                             </li>
-                        </ul>
-                        <button onClick={toggleUpdateProfile} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Edit Profile</button>
+                        </ul> */}
+                        
+                        <button onClick={toggleUpdateProfile} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4">Edit Profile</button>
                     </div>
                 </div>
                 {/* Right Side */}
-                <div className="w-full md:w-9/12 mx-2 h-64">
+                <div className="w-full md:w-10/12 mx-1 h-64 rounded-lg shadow-lg" >
                     {/* Update Profile Section */}
-                    {showUpdateProfile && (
+                    
                         <form onSubmit={updateProfile}>
                             <div className="bg-white p-3 shadow-sm rounded-sm">
-                                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                                <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-5">
                                     <span className="text-green-500">
                                         <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -130,43 +133,44 @@ const Profile = () => {
                                     </span>
                                     <span className="tracking-wide">About</span>
                                 </div>
-                                <div className="text-gray-700">
-                                    <div className="grid md:grid-cols-2 text-sm">
+                                <div className="text-gray-900">
+                                    <div class="grid gap-6 mb-6 md:grid-cols-2">
                                         {/* Add input fields for profile details */}
-                                                                               {/* First Name */}
-                                                                               <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">First Name</div>
-                                            <input type="text" className="m-2 rounded border-2 border-black" name="first_name" value={profile.first_name} onChange={handleChange} />
+                                        {/* First Name */}
+                                        <div className="relative z-0 w-full mb-5 group">
+                                            <input type="text" name="first_name" id="first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=''  onChange={handleChange}/>
+                                            <label htmlFor="first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
                                         </div>
+
                                         {/* Last Name */}
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Last Name</div>
-                                            <input type="text" className="m-2 rounded border-2 border-black" name="last_name" value={profile.last_name} onChange={handleChange} />
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="text" name="last_name" id="last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
                                         </div>
                                         {/* Gender */}
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Gender</div>
-                                            <input type="text" className="m-2 rounded border-2 border-black" name="gender" value={profile.gender} onChange={handleChange} />
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="text" name="gender" id="gender" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Gender</label>
                                         </div>
                                         {/* Contact No. */}
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Contact No.</div>
-                                            <input type="text" className="m-2 rounded border-2 border-black" name="contact_no" value={profile.contact_no} onChange={handleChange} />
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="text" name="contact_no" id="contact_no" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contact no.</label>
                                         </div>
                                         {/* Email */}
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Email</div>
-                                            <input type="text" className="m-2 rounded border-2 border-black" name="email" value={profile.email} onChange={handleChange} />
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
                                         </div>
                                         {/* Current Address */}
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Current Address</div>
-                                            <input type="text" className="m-2 rounded border-2 border-black" name="current_address" value={profile.current_address} onChange={handleChange} />
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="text" name="current_address" id="current_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Current Address</label>
                                         </div>
                                         {/* Permanent Address */}
-                                        <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Permanent Address</div>
-                                            <input type="text" className="m-2 rounded border-2 border-black" name="permanent_address" value={profile.permanent_address} onChange={handleChange} />
+                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                            <input type="text" name="permanent_address" id="permanent_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Permanent Address</label>
                                         </div>
                                         {/* Profile Picture */}
                                         {/* <div className="grid grid-cols-2">
@@ -178,11 +182,12 @@ const Profile = () => {
                                         <div className="flex mt-5 mx-48">
                                             <input type="submit" className="text-white bg-blue-700 hover:bg-blue-800 px-5 py-1  focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-xl text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Save" />
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </form>
-                    )}
+                    
                     {/* End of Update Profile Section */}
                     <div className="my-4"></div>
                 </div>
