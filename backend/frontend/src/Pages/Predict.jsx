@@ -130,7 +130,7 @@ export default function Predict() {
         <div>
           {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
           <div className="container m-auto mt-7 z-0 relative">
-            <img src={bg2} alt="" className=' absolute' />
+            <img src={bg2} alt="" className=' absolute' style={{zIndex:-1}} />
             <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
             <div>
                 <div className="flex flex-col items-center mt-6">
