@@ -35,11 +35,17 @@ const Navbar = () => {
           scan the medicine
         </NavLink>
 
-        <NavLink
-          to={'/Profile'}
-            className="text-black font-semibold text-xl mr-4 p-2" >
-          Profile
-        </NavLink>
+        {
+          user?(
+            <NavLink
+              to={'/Profile'}
+                className="text-black font-semibold text-xl mr-4 p-2" >
+              Profile
+            </NavLink>
+          ):(
+            <div></div>
+          )
+        }
         {
           user? (
             <a onClick={logoutUser} className='p-14 px-9 m-113 py-2.5 text-base transition-all duration-200 cursor-pointer hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md '>Logout</a>

@@ -11,7 +11,7 @@ const Hiw = () => {
       <div>
           {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
           <div className="container m-auto mt-7 z-0 relative">
-            <img src={bg2} alt="" className=' absolute' />
+            <img src={bg2} alt="" className=' absolute' style={{zIndex:-1}}/>
             <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
             <section className="py-10 sm:py-16 lg:py-24">
               <div className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8" style={{marginTop:-50}}>
@@ -21,7 +21,7 @@ const Hiw = () => {
                           <p className="mt-4 text-base leading-relaxed text-gray-600">Guiding Your Health Choices with Data-Driven Precision and Compassion</p>
                           <div className='mt-4' >
                             <button className='rounded-md bg-slate-800 px-7 py-2.5  text-white '>Get Started</button>
-                            <button className='ml-4 font-medium'> Github repo</button>
+                            <button className='ml-4 font-medium'><a href="https://github.com/Upendra2003/Meddp.git"> Github repo</a></button>
                           </div>
                       </div>
 
