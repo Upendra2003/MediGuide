@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../context/AuthContext';
 import profile_bg from '../assets/profile_bg.png'
 import default_profile from '../assets/default_profile.png'
+import bg from '../assets/Background.png'
+import bg2 from '../assets/Pattern.png'
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
@@ -80,7 +82,13 @@ const Profile = () => {
     }, [user.p_id]);
 
     return (
-        <div className="container mx-auto my-9 p-5 h-full">
+        <>
+        <div>
+          {/* <img className='w-1/2  z-10' src={bg} alt="" /> */}
+          <div className="container m-auto mt-7 z-0 relative">
+            <img src={bg2} alt="" className=' absolute' style={{zIndex:-1}}/>
+            <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
+            <div className="container mx-auto mb-12 p-5 h-full">
             <div className="md:flex no-wrap md:-mx-2">
                 {/* Left Side */}
                 <div className="w-full h-full md:w-4/12 md:mx-16">
@@ -124,7 +132,7 @@ const Profile = () => {
                     {/* Update Profile Section */}
                     
                         <form onSubmit={updateProfile}>
-                            <div className="bg-white p-3 shadow-sm rounded-sm">
+                            <div className="bg-white p-3 shadow-lg rounded-lg">
                                 <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-5">
                                     <span className="text-green-500">
                                         <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -193,6 +201,10 @@ const Profile = () => {
                 </div>
             </div>
         </div>
+          </div>
+        </div>
+        
+        </>
     );
 };
 

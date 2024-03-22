@@ -46,7 +46,7 @@ const STM = () => {
         <div>
           <form onSubmit={handleOnSubmit} method='POST' enctype='multipart/form-data'>
             <label>
-              <div className='border-dashed border-2 border-blue-500 m-10 rounded-lg flex flex-col justify-center items-center p-10'>
+              <div className='border-dashed border-2 cursor-pointer border-blue-500 m-10 rounded-lg flex flex-col justify-center items-center p-10'>
               <h1 className='font-bold text-blue-500'>Add Photo</h1>
                 <IoMdImages className='text-6xl text-blue-300' />
                 <p className='text-blue-500 text-sm'>Drag and drop or <span className='font-bold'>browse</span> to upload</p>
@@ -56,12 +56,12 @@ const STM = () => {
               
             </label>
               <div className=' flex justify-center items-center'>
-                      <button type='submit' class="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-blue-100 border border-gray-100 rounded-lg shadow-inner group w-11/12 mb-5">
-                      <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-blue-600 group-hover:w-full ease"></span>
-                      <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-blue-600 group-hover:w-full ease"></span>
-                      <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-blue-400 group-hover:h-full ease"></span>
-                      <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-blue-400 group-hover:h-full ease"></span>
-                      <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-blue-400 opacity-0 group-hover:opacity-100"></span>
+                      <button type='submit' class="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group w-11/12 mb-5">
+                      <span class="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-800 group-hover:w-full ease"></span>
+                      <span class="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-800 group-hover:w-full ease"></span>
+                      <span class="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-800 group-hover:h-full ease"></span>
+                      <span class="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-800 group-hover:h-full ease"></span>
+                      <span class="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-800 opacity-0 group-hover:opacity-100"></span>
                       <span class="relative transition-colors duration-300 delay-200 group-hover:text-white ease">Scan</span>
                     </button>
               </div>
