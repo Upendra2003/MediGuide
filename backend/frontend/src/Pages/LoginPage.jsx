@@ -21,13 +21,13 @@ export default function LoginPage() {
         <h1 className="font-bold text-center text-2xl mb-5">MedSP</h1>  
         <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
           <form onSubmit={loginUser}  className="px-5 py-7">
-            <label  className="font-semibold text-sm text-gray-600 pb-1 block" >Username</label>
+            <label  className="font-semibold text-sm text-gray-900 pb-1 block" >Username</label>
             <input
                                 type='text' 
                                     placeholder='name' name='username'
                                     className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
                                 />
-            <label className="font-semibold text-sm text-gray-600 pb-1 block" >Password</label>
+            <label className="font-semibold text-sm text-gray-900 pb-1 block" >Password</label>
             <input
                                     type="password" placeholder='password' name='password'
                                     className="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"

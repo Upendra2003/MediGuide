@@ -173,11 +173,11 @@ const Profile = () => {
                     </div>
                 </div>
                 {/* Right Side */}
-                <div className="w-full md:w-10/12 mx-1 h-64 rounded-lg shadow-lg" >
+                <div className="w-full md:w-8/12 mx-1 h-64 rounded-lg shadow-lg" >
                     {/* Update Profile Section */}
                     
                         <form onSubmit={updateProfile}>
-                            <div className="bg-white p-3 shadow-lg rounded-lg">
+                            <div className="bg-white p-4 md:px-10 shadow-lg rounded-lg">
                                 <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-5">
                                     <span className="text-green-500">
                                         <svg className="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -187,51 +187,51 @@ const Profile = () => {
                                     <span className="tracking-wide">About</span>
                                 </div>
                                 <div className="text-gray-900">
-                                    <div class="grid gap-6 mb-6 md:grid-cols-2">
+                                    <div class="grid gap-5 mb-6 md:grid-cols-2">
                                         {/* Add input fields for profile details */}
                                         {/* First Name */}
-                                        <div className="relative z-0 w-full mb-5 group">
+                                        <div className="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="text" name="first_name" id="first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=''  onChange={handleChange}/>
                                             <label htmlFor="first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
                                         </div>
 
                                         {/* Last Name */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="text" name="last_name" id="last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
                                         </div>
                                         {/* Gender */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="text" name="gender" id="gender" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Gender</label>
                                         </div>
                                         {/* Contact No. */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="text" name="contact_no" id="contact_no" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contact no.</label>
                                         </div>
                                         {/* Email */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="email" name="email" id="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
                                         </div>
                                         {/* Height */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="height" name="height" id="height" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Height</label>
                                         </div>
                                         {/* Weight */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="weight" name="weight" id="weight" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Weight</label>
                                         </div>
                                         {/* Current Address */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="text" name="current_address" id="current_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Current Address</label>
                                         </div>
                                         {/* Permanent Address */}
-                                        <div class="relative z-0 w-full mb-5 group text-grey-900">
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="text" name="permanent_address" id="permanent_address" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Permanent Address</label>
                                         </div>
@@ -242,8 +242,8 @@ const Profile = () => {
                                         </div> */}
                                         
                                         {/* Submit Button */}
-                                        <div className="flex mt-5 mx-48">
-                                            <input type="submit" className="text-white bg-blue-700 hover:bg-blue-800 px-5 py-1  focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-xl text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Save" />
+                                        <div className="flex mt-5 mx-44">
+                                            <input type="submit" className="px-4 py-2 text-base transition-all duration-200 cursor-pointer bg-grey-900 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md mr-4" value="Save" />
                                         </div>
                                         
                                     </div>
