@@ -19,6 +19,10 @@ class Profile(models.Model):
     profile_pic = models.ImageField(blank=True,null=True)
     created = models.DateTimeField(auto_now_add=True)
     p_id = models.UUIDField(default=uuid.uuid4,primary_key=True)
+    weight = models.CharField(max_length=10,blank=True,null=True)
+    height = models.CharField(max_length=10,blank=True,null=True)
+    bmi = models.CharField(max_length=10,blank=True,null=True)
+
 
     def __str__(self):
         return str(self.username)
