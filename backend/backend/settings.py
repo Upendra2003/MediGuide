@@ -97,21 +97,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'mediguide',
-#         'USER':'postgres',
-#         'PASSWORD':'Upendra1028',
-#         'HOST':'localhost',
-#         'PORT':'5432'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER':'postgres.mvmpvirhcqkxzedbsmtb',
+        'PASSWORD':'lU9IowufU0QnxNgT',
+        'HOST':'aws-0-us-west-1.pooler.supabase.com',
+        'PORT':'5432'
+    }
+}
 
 # DATABASES = {'default': dj_database_url.config(default='postgresql://upendra:GeIBzuuphLDkplfzccHTRw@beach-manatee-4212.7s5.aws-ap-south-1.cockroachlabs.cloud:26257/defaultdb?sslmode=require', engine='django_cockroachdb')}
-DATABASES={
-    'default':dj_database_url.parse('postgres://mediguide_user:ed2ZZWfYBWr4Tvtsj3r1N8iutEwVK1gV@dpg-co1aqqmct0pc73fm0e3g-a/mediguide')
-}
+# DATABASES={
+#     'default':dj_database_url.parse('postgres://mediguide_vcqe_user:SCd5h6E3Zo9EylC0Fejgrl0pOh2ho6KE@dpg-co1flkect0pc73dbnl80-a/mediguide_vcqe')
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
