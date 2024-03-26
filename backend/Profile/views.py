@@ -51,13 +51,24 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+
 @api_view(['PUT'])
 def updateProfile(request, id):
     try:
         profile = get_object_or_404(Profile, pk=id)
         serializer = ProfileSerializer(instance=profile, data=request.data)
+        print(1)
         if serializer.is_valid():
+            # Save profile data
             serializer.save()
+            print(2)
+            # Handle profile picture upload
+            profile_pic = request.FILES.get('profile_pic')
+            print(3)
+            if profile_pic:
+                profile.profile_pic=profile_pic
+                profile.save()
+
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

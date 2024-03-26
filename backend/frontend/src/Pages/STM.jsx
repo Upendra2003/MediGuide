@@ -45,12 +45,12 @@ const STM = () => {
           <div className="container m-auto mt-7 z-0 relative">
             <img src={bg2} alt="" className=' absolute' />
             <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
-            <div className='flex flex-col justify-around items-center'>
+            <div className='flex lg:flex-row flex-col justify-around items-center m-auto'>
               <div className="instructions">
-                <img className='w-full md:w-96' src={img} alt="" />
+                <img className='w-96 m-5 lg:m-0 ' src={img} alt="" />
               </div>
-              <div className="img">
-                <img className='w-full md:w-72' src={img2} alt="" />
+              <div className="img hidden lg:block">
+                <img className=' w-80 ' src={img2} alt="" />
               </div>
             </div>
           </div>

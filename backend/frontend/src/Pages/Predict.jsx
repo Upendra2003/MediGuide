@@ -169,7 +169,7 @@ export default function Predict() {
                                 options={symptomsData}
                                 value={symptomsList}
                                 onChange={handleChange}
-                                className='block w-full p-2  text-md text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500'
+                                className='block w-11/12 m-auto z-1 p-2  text-md text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500'
                             />
                             <div className="m-3 float-right">
                                 <button type='submit' onClick={togglemodal} class="relative px-5 py-3 overflow-hidden font-medium text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner group">
@@ -203,7 +203,7 @@ export default function Predict() {
                                     <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
                                 </button>
                             </div>
-                            <div className=" modal__face--back flex flex-col rounded-xl px-4 pt-4 md:pt-10 md:pb-3 md:px-10 sm:w-full " style={{minWidth: '310px',maxWidth:'600px'}}>
+                            <div className=" modal__face--back flex flex-col rounded-xl px-4 pt-4 md:pt-10 md:pb-3 md:px-10 sm:w-full pb-4" style={{minWidth: '310px',maxWidth:'600px'}}>
                                 <h4 className='text-lg font-bold text-gray-800'>Precautions:</h4>
                                 {prediction.precautions && Object.keys(prediction.precautions).length > 0 ? (
                                     <div>

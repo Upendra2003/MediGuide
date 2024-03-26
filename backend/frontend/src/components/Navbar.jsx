@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
+import logo from '../assets/logo.png'
 
 const Navbar = () => {
   const { user, logoutUser } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const Navbar = () => {
     <nav className='flex items-center justify-between h-16 lg:h-20 relative' style={{ zIndex: 3 }}>
       <div className='flex-shrink-0'>
         <NavLink onClick={closeMenu} to={'/'} className="flex text-black font-bold text-xl ml-8 p-2">
-          MedSP
+          <img src={logo} alt="mediguide" className=' lg:w-52 w-40 mt-10 w-40d' style={{marginLeft:-30}} />
         </NavLink>
       </div>
       <div className="hidden lg:flex lg:items-center lg:justify-between lg:w-auto">

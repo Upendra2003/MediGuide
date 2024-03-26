@@ -5,6 +5,7 @@ import default_profile from '../assets/default_profile.png'
 import bg from '../assets/Background.png'
 import bg2 from '../assets/Pattern.png'
 
+
 const Profile = () => {
     const { user } = useContext(AuthContext);
 
@@ -16,7 +17,7 @@ const Profile = () => {
         contact_no: '',
         current_address: '',
         permanent_address: '',
-        profile_pic: '',
+        profile_pic: null,
         height:'',
         weight:'',
         bmi:'',
@@ -30,12 +31,22 @@ const Profile = () => {
         console.log('Updating profile:', profile);
 
         try {
+            const formData = new FormData();
+            formData.append('first_name', profile.first_name);
+            formData.append('last_name', profile.last_name);
+            formData.append('email', profile.email);
+            formData.append('gender', profile.gender);
+            formData.append('contact_no', profile.contact_no);
+            formData.append('current_address', profile.current_address);
+            formData.append('permanent_address', profile.permanent_address);
+            formData.append('height', profile.height);
+            formData.append('weight', profile.weight);
+            formData.append('bmi', profile.bmi);
+            formData.append('profile_pic', profile.profile_pic); // Append profile_pic
+
             const response = await fetch(`http://127.0.0.1:8000/profile/update-profile/${user.p_id}/`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(profile),
+                body: formData,
             });
 
             if (response.ok) {
@@ -51,11 +62,16 @@ const Profile = () => {
         }
     };
 
+
     const handleChange = (e) => {
         setProfile({
             ...profile,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const handleImageChange = (e) => {
+        setProfile({ ...profile, profile_pic: e.target.files[0] });
     };
 
     // const toggleUpdateProfile = () => {
@@ -133,17 +149,17 @@ const Profile = () => {
           <div className="container m-auto mt-3 z-0 relative">
             <img src={bg2} alt="" className=' absolute' style={{zIndex:-1}}/>
             <img src={bg} alt="" className=' absolute' style={{zIndex:-1,width:600,right:0,top:-110}} />
-            <div className="container mx-auto mb-24 p-5 h-full">
-            <div className="md:flex no-wrap md:-mx-2">
+            <div className="container mx-auto  p-5 h-full mb-40">
+            <div className="md:flex no-wrap md:-mx-2 ">
                 {/* Left Side */}
                 <div className="w-full h-full md:w-4/12 md:mx-16 my-9 rounded-lg shadow-lg">
                     {/* Profile Card */}
                     <div className="bg-cover text-center rounded-lg shadow-lg h-160 w-94" style={{ backgroundImage: `url('${profile_bg}')` }}>
                         <div className="image overflow-hidden">
                             <img
-                                className="h-24 w-24 mx-auto rounded-full my-8 ring-2 ring-gray-700 dark:ring-gray-700"
-                                // src={userData && userData.profile_pic}
-                                src={default_profile}
+                                className="h-24 w-24 mx-auto rounded-full my-8 object-cover ring-4 ring-gray-700 dark:ring-gray-700 "
+                                src={`http://127.0.0.1:8000${profile.profile_pic}`}
+                                // src={profile.profile_pic}
                             />
                         </div>
                         <h1 className="text-gray-900 font-bold text-xl leading-8 mb-4">{userData && userData.first_name} {userData && userData.last_name}</h1>
@@ -176,7 +192,7 @@ const Profile = () => {
                 <div className="w-full md:w-8/12 mx-1 h-64 rounded-lg shadow-lg" >
                     {/* Update Profile Section */}
                     
-                        <form onSubmit={updateProfile}>
+                        <form onSubmit={updateProfile} enctype="multipart/form-data">
                             <div className="bg-white p-4 md:px-10 shadow-lg rounded-lg">
                                 <div className="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-5">
                                     <span className="text-green-500">
@@ -218,12 +234,12 @@ const Profile = () => {
                                         {/* Height */}
                                         <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="height" name="height" id="height" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
-                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Height</label>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Height(in cm) </label>
                                         </div>
                                         {/* Weight */}
                                         <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
                                             <input type="weight" name="weight" id="weight" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleChange}/>
-                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Weight</label>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Weight(in Kg)</label>
                                         </div>
                                         {/* Current Address */}
                                         <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
@@ -236,13 +252,13 @@ const Profile = () => {
                                             <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Permanent Address</label>
                                         </div>
                                         {/* Profile Picture */}
-                                        {/* <div className="grid grid-cols-2">
-                                            <div className="px-4 py-2 font-semibold">Profile Picture</div>
-                                            <input type="file" className="m-2 rounded border-2 border-black" name="profile_pic" onChange={handleChange} />
-                                        </div> */}
+                                        <div class="relative z-0 w-3 mb-5 group" style={{minWidth:'15.75rem'}}>
+                                            <input type="file" name="profile_pic" id="profile_pic" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-grey-900 dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "  onChange={handleImageChange}/>
+                                            <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Profile Picture</label>
+                                        </div>
                                         
                                         {/* Submit Button */}
-                                        <div className="flex mt-5 mx-44">
+                                        <div className="flex mt-3">
                                             <input type="submit" className="px-4 py-2 text-base transition-all duration-200 cursor-pointer bg-grey-900 hover:bg-blue-300 hover:text-black focus:text-black focus:bg-blue-300 font-semibold text-white bg-black rounded-md mr-4" value="Save" />
                                         </div>
                                         
