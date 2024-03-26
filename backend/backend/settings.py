@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import dj_database_url
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -94,12 +97,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'mediguide',
+#         'USER':'postgres',
+#         'PASSWORD':'Upendra1028',
+#         'HOST':'localhost',
+#         'PORT':'5432'
+#     }
+# }
+
+# DATABASES = {'default': dj_database_url.config(default='postgresql://upendra:GeIBzuuphLDkplfzccHTRw@beach-manatee-4212.7s5.aws-ap-south-1.cockroachlabs.cloud:26257/defaultdb?sslmode=require', engine='django_cockroachdb')}
+DATABASES={
+    'default':dj_database_url.parse('postgres://mediguide_user:ed2ZZWfYBWr4Tvtsj3r1N8iutEwVK1gV@dpg-co1aqqmct0pc73fm0e3g-a/mediguide')
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -132,7 +150,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 STATIC_URL = 'static/'
 
-import os
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
