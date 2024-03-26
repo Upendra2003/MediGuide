@@ -25,12 +25,13 @@ const STM = () => {
     console.log(formData);
 
     try {
+      console.log(1)
       setLoading(true); // Set loading to true while waiting for response
-      let response = await fetch('http://127.0.0.1:8000/predict_disease/scan_image/', {
+      let response = await fetch('https://mediguide-epnl.onrender.com/predict_disease/scan_image/', {
         method: 'POST',
         body: formData,
       });
-
+      console.log(2)
       // Check if the response is successful
       if (!response.ok) {
         throw new Error('Failed to fetch data from server');

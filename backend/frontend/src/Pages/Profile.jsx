@@ -44,7 +44,7 @@ const Profile = () => {
             formData.append('bmi', profile.bmi);
             formData.append('profile_pic', profile.profile_pic); // Append profile_pic
 
-            const response = await fetch(`http://127.0.0.1:8000/profile/update-profile/${user.p_id}/`, {
+            const response = await fetch(`https://mediguide-epnl.onrender.com/profile/update-profile/${user.p_id}/`, {
                 method: 'PUT',
                 body: formData,
             });
@@ -122,7 +122,7 @@ const Profile = () => {
 
     const getProfile = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/profile/get-profile/${user.p_id}`, {
+            const response = await fetch(`https://mediguide-epnl.onrender.com/profile/get-profile/${user.p_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const Profile = () => {
                         <div className="image overflow-hidden">
                             <img
                                 className="h-24 w-24 mx-auto rounded-full my-8 object-cover ring-4 ring-gray-700 dark:ring-gray-700 "
-                                src={`http://127.0.0.1:8000${profile.profile_pic}`}
+                                src={`https://mediguide-epnl.onrender.com${profile.profile_pic}`}
                                 // src={profile.profile_pic}
                             />
                         </div>
