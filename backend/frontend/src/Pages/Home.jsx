@@ -17,7 +17,7 @@ const Home = () => {
                 <div className="max-w-5xl px-8 mx-auto sm:px-8 lg:px-8 sm:mt-0 lg:mt-0" style={{marginTop:'-10px'}}>
                     <div className="grid items-center grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-20">
                         <div className="text-center sm:text-left ">
-                            <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl my-10">“MedSP”- a all new digital way of next level first-aid for everyone</h2>
+                            <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl my-10">“MediGuide”- a all new digital way of next level first-aid for everyone</h2>
                             <p className="mt-4 text-base leading-relaxed text-gray-400">Our platform leverages cutting-edge technology to provide you with accurate and timely medical guidance, right from the comfort of your own home</p>
                             <div className='mt-6 mb-6' >
                               <Link to={'/Predict'} className='rounded-md bg-slate-800 px-7 py-2.5  text-white '>Predictor</Link>
