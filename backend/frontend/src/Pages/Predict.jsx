@@ -38,7 +38,7 @@ export default function Predict() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/predict_disease/get_symptoms/`);
+            const response = await fetch(`https://mediguide-epnl.onrender.com/predict_disease/get_symptoms/`);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -90,7 +90,7 @@ export default function Predict() {
         event.preventDefault();
         console.log('Selected symptoms:', symptomsList);
         try {
-            const response = await fetch('http://127.0.0.1:8000/predict_disease/predict/', {
+            const response = await fetch('https://mediguide-epnl.onrender.com/predict_disease/predict/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

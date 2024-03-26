@@ -15,7 +15,7 @@ export const AuthProvider=({children,loginDetails})=>{
 
     let loginUser = async (e)=>{
         e.preventDefault()
-        let response = await fetch('http://127.0.0.1:8000/profile/login/',{
+        let response = await fetch('https://mediguide-epnl.onrender.com/profile/login/',{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -35,7 +35,7 @@ export const AuthProvider=({children,loginDetails})=>{
 
     let updateUser = async()=>{
         console.log("update called")
-        let response = await fetch('http://127.0.0.1:8000/profile/user/token/refresh/',{
+        let response = await fetch('https://mediguide-epnl.onrender.com/profile/user/token/refresh/',{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"

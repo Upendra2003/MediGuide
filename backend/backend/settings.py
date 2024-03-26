@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-63yya+i6uo!#=+45u8iglf2)ts@lio-&r!x8iq=p%-##5fn$08
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mediguide-epnl.onrender.com']
+ALLOWED_HOSTS = ['mediguide-epnl.onrender.com','127.0.0.1']
 
 # Application definition
 
@@ -145,8 +145,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOW_ALL_ORIGINS = True
+APPEND_SLASH = False
+CORS_ALLOW_ALL_ORIGINS=True
 
 STATIC_URL = 'static/'
 

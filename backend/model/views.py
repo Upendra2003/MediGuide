@@ -116,6 +116,7 @@ from io import BytesIO
 @api_view(['POST'])
 def scan_image(request):
     if request.method=='POST' and request.FILES['image']:
+        print(1)
         img=request.FILES['image']
         if isinstance(img, InMemoryUploadedFile):
             file_content = img.read()
