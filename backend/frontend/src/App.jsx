@@ -1,6 +1,6 @@
 import { Routes,Route } from 'react-router-dom'
 import Home from './Pages/Home'
-import Hiw from './pages/Hiw'
+import Hiw from './Pages/Hiw'
 import Predict  from './Pages/Predict'
 import Profile from './pages/Profile'
 import Temp from './Pages/temp'
